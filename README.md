@@ -19,8 +19,8 @@ Create a view with a supported date field type, select the "Fullcalendar NG"
 - Core date
 - Core datetime
 - Core datestamp
-- Repeating date
-- Resource timeslot
+- [Repeating date](https://backdropcms.org/project/repeating_dates)
+- [Resource timeslot](https://backdropcms.org/project/resource_timeslots)
 - Anything supported by views_handler_field_date, like "node created"
 
 If your favorite field type is missing, let us know.
@@ -30,14 +30,24 @@ If your favorite field type is missing, let us know.
 Bugs and feature requests should be reported in the
  [Issue Queue](https://github.com/backdrop-contrib/fullcalendar_views/issues).
 
+## Known Issues
+
+Because of a silly developer decision ;-), this module currently depends on
+ the Resource Timeslots module, as that module provides the library.
+
+If there's enough interest in decoupling them, it could be solved by
+ splitting the library to its own module (Fullcalendar Library) and let the
+ modules depend on the library module.
+
 ## Current maintainers
 
 * [Indigoxela](https://github.com/indigoxela)
 
 ## Similar modules
 
-This module is inspired by, but in no way similar to Fullcalendar. It has
-pros and cons:
+This module is inspired by, but in no way similar to
+ [Fullcalendar](https://backdropcms.org/project/fullcalendar). It has pros and
+ cons:
 
 - *pro:* It utilizes a current FullCalendar library (currently provided by Resource
  Timeslots)
