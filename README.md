@@ -14,6 +14,22 @@ Install this module using the official Backdrop CMS
 Create a view with a supported date field type, select the "Fullcalendar NG"
  display type and configure.
 
+### Install from GitHub
+
+To test the early dev version follow these steps:
+
+- Click on the green "Code" button on the top right corner (expands a little
+ dialog)
+- Click on "Download ZIP"
+- Extract that zip file locally - note that the directory has a version
+ extension (1.x-1.x)
+- Move that directory from "fullcalendar_views-1.x-1.x" to
+ "fullcalendar_views"
+- Upload (via FTP) or move locally to your /modules directory under your backdrop root
+- Enable it as you normally would via UI on /admin/modules/list
+
+Again: do not yet use on production sites. Too early.
+
 ## Supported (date) field types
 
 - Core date
