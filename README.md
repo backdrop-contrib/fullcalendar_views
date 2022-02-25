@@ -3,7 +3,8 @@
 Views style plugin to render all sorts of date fields as events with FullCalendar
  5.x.
 
-Brand new, work in progress...
+Brand new, work in progress, testing is highly appreciated (not on production
+ sites!).
 
 ## Installation
 
@@ -38,12 +39,14 @@ Bugs and feature requests should be reported in the
 This module is inspired by, but in no way similar to Fullcalendar. It has
 pros and cons:
 
-- pro: It utilizes a current FullCalendar library (currently provided by Resource
+- *pro:* It utilizes a current FullCalendar library (currently provided by Resource
  Timeslots)
-- pro: It supports a lot more date (field) types
-- con: It does not enable you to edit these field values via calendar, only display
+- *pro:* It supports a lot more date (field) types
+- *pro:* Simpler and more lightweight (OK, that's maybe only relevant for
+ maintainers)
+- *con:* It doesn't enable you to edit these field values via calendar, only display
  (that's by intention)
-- con: It has sparse settings (this will change)
+- *con:* It has sparse settings (this will change)
 
 ## License
 
