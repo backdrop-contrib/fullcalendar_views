@@ -1,0 +1,23 @@
+<?php
+/**
+ * Hooks and main code for the Fullcalendar Views NG module.
+ */
+
+/**
+ * Implements hook_views_api().
+ */
+function fullcalendar_views_views_api() {
+  return array(
+    'api' => 3,
+    'path' => backdrop_get_path('module', 'fullcalendar_views') . '/views',
+  );
+}
+
+/**
+ * Implements hook_autoload_info().
+ */
+function fullcalendar_views_autoload_info() {
+  return array(
+    'FullcalendarViewsStyleCalendar' => 'views/fullcalendar_views_style_calendar.inc',
+  );
+}

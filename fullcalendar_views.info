@@ -1,0 +1,8 @@
+name = Fullcalendar Views NG
+description = Views style plugin to render all sorts of date fields as events with FullCalendar 5.x.
+type = module
+package = Views
+backdrop = 1.x
+
+dependencies[] = views
+dependencies[] = resource_timeslots
