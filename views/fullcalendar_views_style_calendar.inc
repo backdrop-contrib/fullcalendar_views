@@ -216,7 +216,7 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
    * @param array $rendered_fields
    *   Array of rendered field values, usually empty at this point.
    */
-  protected function parseDateFields(array $raw_values, $type, &$rendered_fields) {
+  protected static function parseDateFields(array $raw_values, $type, &$rendered_fields) {
     switch ($type) {
       // @todo Can the creepy "time granularity" of core Date fields be a
       // problem, when converting to timestamps?
