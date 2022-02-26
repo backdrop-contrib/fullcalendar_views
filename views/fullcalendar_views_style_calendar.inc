@@ -15,11 +15,14 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
   public function option_definition() {
     $options = parent::option_definition();
 
-    $options['field_mapping'] = array();
-    $options['field_mapping']['date'] = NULL;
-    $options['field_mapping']['title'] = NULL;
-    $options['field_mapping']['url'] = NULL;
-    $options['field_mapping']['tooltip'] = NULL;
+    $options['field_mapping'] = array(
+      'default' => array(
+        'date' => '',
+        'title' => '',
+        'url' => '',
+        'tooltip' => '',
+      ),
+    );
 
     return $options;
   }
