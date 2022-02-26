@@ -14,6 +14,9 @@ Install this module using the official Backdrop CMS
 Create a view with a supported date field type, select the "Fullcalendar NG"
  display type and configure.
 
+Important note: if it's a multi-value field, make sure that the "Display all values in the same
+row" setting under "Multiple field settings" is **not ckecked**.
+
 ### Install from GitHub
 
 To test the early dev version follow these steps:
