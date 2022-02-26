@@ -92,7 +92,6 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
    */
   public function render() {
     // A calendar always needs dates.
-    $all_fields = $this->display->handler->get_field_labels();
     $date_fields = $this->getDateFieldCandidates();
     if (empty($date_fields)) {
       // Show the message only in live preview, not on possibly public pages.
