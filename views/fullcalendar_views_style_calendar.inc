@@ -33,13 +33,12 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
   public function options_form(&$form, &$form_state) {
     parent::options_form($form, $form_state);
 
-    $options = $this->options['field_mapping'];
-    $views_fields = $this->display->handler->get_field_labels();
     $date_fields = $this->getDateFieldCandidates();
-    $all_fields = array('' => t('<none>')) + $views_fields;
     if (empty($date_fields)) {
       backdrop_set_message(t('Fullcalendar views need a supported date field.'), 'warning', FALSE);
     }
+    $mappings = $this->options['field_mapping'];
+    $all_fields = array('' => t('<none>')) + $this->display->handler->get_field_labels();
 
     $form['field_mapping'] = array(
       '#type' => 'container',
@@ -49,7 +48,7 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
       '#type' => 'select',
       '#title' => t('Date field'),
       '#options' => $date_fields,
-      '#default_value' => $options['date'],
+      '#default_value' => $mappings['date'],
       '#required' => TRUE,
       '#description' => t('Supported types are core Date fields, Resource timeslots, Repeating dates, and all timestamps natively handled by views.'),
     );
@@ -57,21 +56,21 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
       '#type' => 'select',
       '#title' => 'Title field',
       '#options' => $all_fields,
-      '#default_value' => $options['title'],
+      '#default_value' => $mappings['title'],
       '#description' => t('The title right after the date displayed in the event area. Is not supposed to contain any markup.'),
     );
     $form['field_mapping']['url'] = array(
       '#type' => 'select',
       '#title' => 'URL field',
       '#options' => $all_fields,
-      '#default_value' => $options['url'],
+      '#default_value' => $mappings['url'],
       '#description' => t('A path or external URL to go to when the event gets clicked.'),
     );
     $form['field_mapping']['tooltip'] = array(
       '#type' => 'select',
       '#title' => 'Tooltip field',
       '#options' => $all_fields,
-      '#default_value' => $options['tooltip'],
+      '#default_value' => $mappings['tooltip'],
       '#description' => t('Extended information displayed in a tooltip when hovering or focusing the event. Can contain markup.'),
     );
   }
