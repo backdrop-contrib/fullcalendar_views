@@ -15,7 +15,7 @@ Create a view with a supported date field type, select the "Fullcalendar NG"
  display type and configure.
 
 Important note: if it's a multi-value field, make sure that the "Display all values in the same
-row" setting under "Multiple field settings" is **not ckecked**.
+row" setting under "Multiple field settings" of that view field is **not checked**.
 
 ### Install from GitHub
 
