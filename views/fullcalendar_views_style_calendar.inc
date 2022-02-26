@@ -35,7 +35,7 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
 
     $options = $this->options['field_mapping'];
     $views_fields = $this->display->handler->get_field_labels();
-    $date_fields = self::getDateFieldCandidates($views_fields);
+    $date_fields = $this->getDateFieldCandidates();
     $all_fields = array('' => t('<none>')) + $views_fields;
     if (empty($date_fields)) {
       backdrop_set_message(t('Fullcalendar views need a supported date field.'), 'warning', FALSE);
@@ -94,7 +94,7 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
   public function render() {
     // A calendar always needs dates.
     $all_fields = $this->display->handler->get_field_labels();
-    $date_fields = self::getDateFieldCandidates($all_fields);
+    $date_fields = $this->getDateFieldCandidates();
     if (empty($date_fields)) {
       // Show the message only in live preview, not on possibly public pages.
       if (!empty($this->view->live_preview)) {
@@ -181,7 +181,8 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
   /**
    * Filter the list of views fields down to only supported date-type fields.
    */
-  protected function getDateFieldCandidates(array $all_fields) {
+  protected function getDateFieldCandidates() {
+    $all_fields =$this->display->handler->get_field_labels();
     $handlers = $this->display->handler->get_handlers('field');
     $field_candidates = array();
 
