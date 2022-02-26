@@ -121,7 +121,7 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
     backdrop_add_library('resource_timeslots', 'fullcalendar');
     backdrop_add_js(backdrop_get_path('module', 'fullcalendar_views') . '/js/fullcalendar-views.js');
 
-    $settings['locale'] = $language->langcode;// @todo en_GB!
+    $settings['locale'] = self::getLangcode();
     $id = $view->name . ucfirst($view->current_display);
     $setup = array(
       'fullcalendarViews' => array(
@@ -180,7 +180,7 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
    * Filter the list of views fields down to only supported date-type fields.
    */
   protected function getDateFieldCandidates() {
-    $all_fields =$this->display->handler->get_field_labels();
+    $all_fields = $this->display->handler->get_field_labels();
     $handlers = $this->display->handler->get_handlers('field');
     $field_candidates = array();
 
@@ -250,6 +250,19 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
         $rendered_fields['end'] = $raw_values[0]['end'] * 1000;
         break;
     }
+  }
+
+  public static function getLangcode() {
+    global $language;
+    $langcode = $language->langcode;
+    $default_country = config_get('system.date', 'default_country');
+
+    // Otherwise people in UK get the wrong date/month order in calendar headers.
+    if ($default_country == 'GB' && $langcode == 'en') {
+      return 'en-gb';
+    }
+
+    return $langcode;
   }
 
 }
