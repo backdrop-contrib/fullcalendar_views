@@ -252,12 +252,15 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
     }
   }
 
+  /**
+   * Helper function to set the proper locale for FullCalendar.
+   */
   public static function getLangcode() {
     global $language;
     $langcode = $language->langcode;
     $default_country = config_get('system.date', 'default_country');
 
-    // Otherwise people in UK get the wrong date/month order in calendar headers.
+    // Otherwise people in UK get the wrong date/month order in calendars.
     if ($default_country == 'GB' && $langcode == 'en') {
       return 'en-gb';
     }
