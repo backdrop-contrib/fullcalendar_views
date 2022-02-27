@@ -159,6 +159,7 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
       'types' => implode(',', array_filter($options['calendar_setup']['types'])),
       'weekNumbers' => (bool) $options['calendar_setup']['weekNumbers'],
       'allDaySlot' => (bool) $options['calendar_setup']['allDaySlot'],
+      'firstDay' => config_get('system.date', 'first_day'),
     );
     // Only needed if tooltips are enabled.
     if ($options['field_mapping']['tooltip']) {
