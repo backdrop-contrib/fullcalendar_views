@@ -13,16 +13,18 @@
         var id = Object.keys(this)[0];
         var calendarElem = document.getElementById(id);
 
-        // @todo A lot more configurable options.
         var options = {
           events: myevents,
           height: 'auto',
           locale: mysettings.locale,
           headerToolbar: {
-            left: 'dayGridMonth,timeGridWeek,timeGridDay',
+            left: mysettings.types,
             center: 'title',
             right: 'prev,next'
           },
+          weekNumbers: mysettings.weekNumbers,
+          allDaySlot: mysettings.allDaySlot,
+          firstDay: mysettings.firstDay,
           eventDidMount: function(arg) {
             if (mysettings.hasTooltips === true) {
               arg.el.setAttribute('data-tooltip', arg.event.extendedProps.tooltip);

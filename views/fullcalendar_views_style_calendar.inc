@@ -23,6 +23,17 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
         'tooltip' => '',
       ),
     );
+    $options['calendar_setup'] = array(
+      'default' => array(
+        'types' => array(
+          'dayGridMonth' => 'dayGridMonth',
+          'timeGridWeek' => 'timeGridWeek',
+          'timeGridDay' => 0,
+        ),
+        'weekNumbers' => FALSE,
+        'allDaySlot' => TRUE,
+      ),
+    );
 
     return $options;
   }
@@ -38,6 +49,7 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
       backdrop_set_message(t('Fullcalendar views need a supported date field.'), 'warning', FALSE);
     }
     $mappings = $this->options['field_mapping'];
+    $setup = $this->options['calendar_setup'];
     $all_fields = array('' => t('<none>')) + $this->display->handler->get_field_labels();
 
     $form['field_mapping'] = array(
@@ -73,6 +85,33 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
       '#default_value' => $mappings['tooltip'],
       '#description' => t('Extended information displayed in a tooltip when hovering or focusing the event. Can contain markup.'),
     );
+
+    $form['calendar_setup'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Calendar options'),
+    );
+    $form['calendar_setup']['types'] = array(
+      '#type' => 'checkboxes',
+      '#title' => t('Available calendar types'),
+      '#options' => array(
+        'dayGridMonth' => t('Month'),
+        'timeGridWeek' => t('Week'),
+        'timeGridDay' => t('Day'),
+      ),
+      '#default_value' => $setup['types'],
+      '#required' => TRUE,
+    );
+    $form['calendar_setup']['weekNumbers'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Display week numbers'),
+      '#default_value' => $setup['weekNumbers'],
+      '#prefix' => '<p><strong>' . 'Display options' . '</strong></p>',
+    );
+    $form['calendar_setup']['allDaySlot'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Display the "all-day" slot'),
+      '#default_value' => $setup['allDaySlot'],
+    );
   }
 
   /**
@@ -106,13 +145,20 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
     $field = $view->field;
     $options = $this->options;
 
-    $events = $settings = array();
+    $events = array();
     // Render the fields with all token replacements and overrides.
     $this->render_fields($view->result);
     foreach ($view->result as $index => $row) {
       $events[$index] = $this->renderRow($view, $index);
     }
 
+    // Various options for the calendar display.
+    $settings = array(
+      'locale' => self::getLangcode(),
+      'types' => implode(',', array_filter($options['calendar_setup']['types'])),
+      'weekNumbers' => (bool) $options['calendar_setup']['weekNumbers'],
+      'allDaySlot' => (bool) $options['calendar_setup']['allDaySlot'],
+    );
     // Only needed if tooltips are enabled.
     if ($options['field_mapping']['tooltip']) {
       backdrop_add_library('system', 'ui.tooltip');
@@ -121,7 +167,6 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
     backdrop_add_library('resource_timeslots', 'fullcalendar');
     backdrop_add_js(backdrop_get_path('module', 'fullcalendar_views') . '/js/fullcalendar-views.js');
 
-    $settings['locale'] = self::getLangcode();
     $id = $view->name . ucfirst($view->current_display);
     $setup = array(
       'fullcalendarViews' => array(
