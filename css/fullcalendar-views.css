@@ -11,3 +11,8 @@
 .fullcalendar-view tr.odd:hover td.active {
   background: inherit;
 }
+@media (max-width: 660px) {
+  .fc .fc-toolbar-title {
+    font-size: 1.3em;
+  }
+}
