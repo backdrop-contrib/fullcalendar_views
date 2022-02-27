@@ -8,10 +8,10 @@
     attach: function (context, settings) {
       $(settings.fullcalendarViews).each(function () {
 
-        var myevents = Object.values(this)[0].events;
-        var mysettings = Object.values(this)[0].settings;
         var id = Object.keys(this)[0];
         var calendarElem = document.getElementById(id);
+        var myevents = this[id].events;
+        var mysettings = this[id].settings;
 
         var options = {
           events: myevents,
