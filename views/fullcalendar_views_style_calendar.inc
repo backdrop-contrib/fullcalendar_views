@@ -111,6 +111,7 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
       '#type' => 'checkbox',
       '#title' => t('Display the "all-day" slot'),
       '#default_value' => $setup['allDaySlot'],
+      '#description' => t('Adds a slot at the top of the calendar to display all-day events.'),
     );
   }
 
