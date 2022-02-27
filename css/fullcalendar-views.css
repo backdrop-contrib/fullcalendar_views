@@ -1,0 +1,13 @@
+/**
+ * Some basic styles to prevent known glitches with theme styles.
+ */
+/* Basis and other themes. */
+.fullcalendar-view table {
+  margin: 0;
+}
+/* Seven */
+.fullcalendar-view tr:hover,
+.fullcalendar-view tr:hover td.active,
+.fullcalendar-view tr.odd:hover td.active {
+  background: inherit;
+}
