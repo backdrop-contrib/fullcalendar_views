@@ -219,7 +219,11 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
         if (isset($field->field_info)) {
           $raw_values = $this->get_field_value($row_index, $view_field);
           $type = $field->field_info['type'];
-          self::parseDateFields($raw_values, $type, $rendered_fields);
+          $date_only = FALSE;
+          if (!empty($field->field_info['settings']['granularity']) && !$field->field_info['settings']['granularity']['hour']) {
+            $date_only = TRUE;
+          }
+          self::parseDateFields($raw_values, $type, $date_only, $rendered_fields);
         }
         // Anything directly supported by views_handler_field_date.
         else {
@@ -271,34 +275,54 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
   }
 
   /**
-   * Parse the various supported date field types into timestamps as msecs.
+   * Parse the various supported date field types into values FC can handle.
    *
    * @param array $raw_values
    *   Raw views result values provided by get_field_value().
    * @param string $type
    *   The field type as defined in hook_field_info().
+   * @param bool $date_only
+   *   Whether this field should be handled without time.
    * @param array $rendered_fields
    *   Array of rendered field values, usually empty at this point.
    */
-  protected static function parseDateFields(array $raw_values, $type, &$rendered_fields) {
+  protected static function parseDateFields(array $raw_values, $type, $date_only, &$rendered_fields) {
     switch ($type) {
-      // @todo Can the creepy "time granularity" of core Date fields be a
-      // problem, when converting to timestamps?
       case 'date':
       case 'datetime':
         $tz = $raw_values[0]['timezone_db'];
         $start = new BackdropDateTime($raw_values[0]['value'], $tz);
-        $rendered_fields['start'] = $start->format('U') * 1000;
+        if ($date_only) {
+          $rendered_fields['start'] = $start->format('Y-m-d');
+        }
+        else {
+          $rendered_fields['start'] = $start->format('U') * 1000;
+        }
         if (!empty($raw_values[0]['value2'])) {
           $end = new BackdropDateTime($raw_values[0]['value2'], $tz);
-          $rendered_fields['end'] = $end->format('U') * 1000;
+          if ($date_only) {
+            $rendered_fields['end'] = $end->format('Y-m-d');
+          }
+          else {
+            $rendered_fields['end'] = $end->format('U') * 1000;
+          }
         }
         break;
 
       case 'datestamp':
-        $rendered_fields['start'] = $raw_values[0]['value'] * 1000;
+        if ($date_only) {
+          $rendered_fields['start'] = format_date($raw_values[0]['value'], 'custom', 'Y-m-d');
+        }
+        else {
+          $rendered_fields['start'] = $raw_values[0]['value'] * 1000;
+        }
         if (!empty($raw_values[0]['value2'])) {
-          $rendered_fields['end'] = $raw_values[0]['value2'] * 1000;
+          if ($date_only) {
+            $rendered_fields['end'] = format_date($raw_values[0]['value2'], 'custom', 'Y-m-d');
+          }
+          else {
+            $rendered_fields['end'] = $raw_values[0]['value2'] * 1000;
+          }
         }
         break;
 
