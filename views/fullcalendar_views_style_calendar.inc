@@ -186,8 +186,8 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
     if (!empty($view->live_preview)) {
       $field_name = $this->options['field_mapping']['date'];
       if (!empty($field_name)) {
-        $multi_setting = $view->display['default']->display_options['fields'][$field_name]['group_rows'];
-        if ($multi_setting) {
+        $field = $view->field[$field_name];
+        if ($field->options['group_rows']) {
           $message = t('The "Multiple field setting" for the %field field is currently to display all in one row, which is not recommended.', array(
             '%field' => $field_name,
           ));
