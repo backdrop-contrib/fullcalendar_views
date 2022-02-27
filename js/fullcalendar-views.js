@@ -17,11 +17,6 @@
           events: myevents,
           height: 'auto',
           locale: mysettings.locale,
-          headerToolbar: {
-            left: mysettings.types,
-            center: 'title',
-            right: 'prev,next'
-          },
           weekNumbers: mysettings.weekNumbers,
           allDaySlot: mysettings.allDaySlot,
           firstDay: mysettings.firstDay,
@@ -47,6 +42,23 @@
             }
           }
         };
+        // We only need the buttons to switch, if there's more than one
+        // enabled calendar type.
+        if (mysettings.types.indexOf(',') > -1) {
+          options.headerToolbar = {
+            left: mysettings.types,
+            center: 'title',
+            right: 'prev,next'
+          };
+        }
+        else {
+          options.headerToolbar = {
+            left: 'title',
+            right: 'prev,next'
+          };
+          options.initialView = mysettings.types;
+        }
+
         // @todo let extend.
         var calendar = new FullCalendar.Calendar(calendarElem, options);
         calendar.render();
