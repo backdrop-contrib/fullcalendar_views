@@ -21,6 +21,7 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
         'title' => '',
         'url' => '',
         'tooltip' => '',
+        'className' => '',
       ),
     );
     $options['calendar_setup'] = array(
@@ -84,6 +85,13 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
       '#options' => $all_fields,
       '#default_value' => $mappings['tooltip'],
       '#description' => t('Extended information displayed in a tooltip when hovering or focusing the event. Can contain markup.'),
+    );
+    $form['field_mapping']['className'] = array(
+      '#type' => 'select',
+      '#title' => t('CSS class'),
+      '#options' => $all_fields,
+      '#default_value' => $mappings['className'],
+      '#description' => t('Additional event CSS class based on fields, for example taxonomy term.'),
     );
 
     $form['calendar_setup'] = array(
@@ -235,7 +243,11 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
         // Title, url and tooltip stay unchanged. Note that the title seems to
         // get sanitized by FullCalendar. These fields are optional.
         if (!empty($this->rendered_fields[$row_index][$view_field])) {
-          $rendered_fields[$target] = $this->rendered_fields[$row_index][$view_field];
+          $rendered_field = $this->rendered_fields[$row_index][$view_field];
+          if ($target == 'className') {
+            $rendered_field = backdrop_clean_css_identifier($rendered_field);
+          }
+          $rendered_fields[$target] = $rendered_field;
         }
       }
     }
