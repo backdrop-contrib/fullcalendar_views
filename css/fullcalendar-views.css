@@ -11,6 +11,11 @@
 .fullcalendar-view tr.odd:hover td.active {
   background: inherit;
 }
+/* Axioma */
+.fullcalendar-view td,
+.fullcalendar-view th {
+  overflow: visible;
+}
 @media (max-width: 660px) {
   .fc .fc-toolbar-title {
     font-size: 1.3em;
