@@ -33,6 +33,8 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
         ),
         'weekNumbers' => FALSE,
         'allDaySlot' => TRUE,
+        'slotMinTime' => '',
+        'slotMaxTime' => '',
       ),
     );
 
@@ -113,13 +115,29 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
       '#type' => 'checkbox',
       '#title' => t('Display week numbers'),
       '#default_value' => $setup['weekNumbers'],
-      '#prefix' => '<p><strong>' . 'Display options' . '</strong></p>',
+      '#prefix' => '<p><strong>' . t('Display options') . '</strong></p>',
     );
     $form['calendar_setup']['allDaySlot'] = array(
       '#type' => 'checkbox',
       '#title' => t('Display the "all-day" slot'),
       '#default_value' => $setup['allDaySlot'],
       '#description' => t('Adds a slot at the top of the calendar to display all-day events.'),
+    );
+    $form['calendar_setup']['slotMinTime'] = array(
+      '#type' => 'number',
+      '#title' => t('First hour'),
+      '#min' => 0,
+      '#max' => 23,
+      '#default_value' => $setup['slotMinTime'],
+      '#description' => t('First hour to display in week or day view.'),
+    );
+    $form['calendar_setup']['slotMaxTime'] = array(
+      '#type' => 'number',
+      '#title' => t('Last hour'),
+      '#min' => 1,
+      '#max' => 23,
+      '#default_value' => $setup['slotMaxTime'],
+      '#description' => t('Last hour to display in week or day view.'),
     );
   }
 
@@ -169,6 +187,14 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
       'allDaySlot' => (bool) $options['calendar_setup']['allDaySlot'],
       'firstDay' => config_get('system.date', 'first_day'),
     );
+    if (!empty($options['calendar_setup']['slotMinTime'])) {
+      $settings['slotMinTime'] = str_pad($options['calendar_setup']['slotMinTime'], 2, '0', STR_PAD_LEFT) . ':00';
+    }
+    if (!empty($options['calendar_setup']['slotMaxTime'])) {
+      // End display is exclusive.
+      $hour = $options['calendar_setup']['slotMaxTime'] + 1;
+      $settings['slotMaxTime'] = str_pad($hour, 2, '0', STR_PAD_LEFT) . ':00';
+    }
     // Only needed if tooltips are enabled.
     if ($options['field_mapping']['tooltip']) {
       backdrop_add_library('system', 'ui.tooltip');

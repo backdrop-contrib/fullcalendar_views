@@ -42,6 +42,12 @@
             }
           }
         };
+        if (typeof mysettings.slotMinTime !== 'undefined') {
+          options.slotMinTime = mysettings.slotMinTime;
+        }
+        if (typeof mysettings.slotMaxTime !== 'undefined') {
+          options.slotMaxTime = mysettings.slotMaxTime;
+        }
         // We only need the buttons to switch, if there's more than one
         // enabled calendar type.
         if (mysettings.types.indexOf(',') > -1) {
