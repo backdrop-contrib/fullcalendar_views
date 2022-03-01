@@ -19,7 +19,7 @@ row" setting under "Multiple field settings" of that view field is **not checked
 
 ## Dependencies
 
-- The Fullcalendar Library module
+- The [Fullcalendar Library](https://backdropcms.org/project/fullcalendar_lib) module
 
 ## Supported (date) field types
 
