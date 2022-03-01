@@ -24,6 +24,11 @@
             if (mysettings.hasTooltips === true) {
               arg.el.setAttribute('data-tooltip', arg.event.extendedProps.tooltip);
               $(arg.el).tooltip({
+                position: {
+                  my: 'left top+7',
+                  at: 'left bottom',
+                  collision: 'flipfit'
+                },
                 items: '[data-tooltip]',
                 content: function() {
                   return $(this).attr('data-tooltip');

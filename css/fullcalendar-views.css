@@ -1,6 +1,9 @@
 /**
  * Some basic styles to prevent known glitches with theme styles.
  */
+.fullcalendar-view a {
+  color: currentcolor;
+}
 /* Basis and other themes. */
 .fullcalendar-view table {
   margin: 0;
