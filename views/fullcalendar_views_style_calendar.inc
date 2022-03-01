@@ -256,7 +256,12 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
         if (!empty($this->rendered_fields[$row_index][$view_field])) {
           $rendered_field = $this->rendered_fields[$row_index][$view_field];
           if ($target == 'className') {
-            $rendered_field = backdrop_clean_css_identifier($rendered_field);
+            $output = '';
+            $classes = explode(' ', $rendered_field);
+            foreach ($classes as $class) {
+              $output .= ' ' . backdrop_clean_css_identifier($class);
+            }
+            $rendered_field = $output;
           }
           $rendered_fields[$target] = $rendered_field;
         }
