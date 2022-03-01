@@ -21,3 +21,24 @@ function fullcalendar_views_autoload_info() {
     'FullcalendarViewsStyleCalendar' => 'views/fullcalendar_views_style_calendar.inc',
   );
 }
+
+/**
+ * Implements template_preprocess_views_ui_view_preview_section().
+ */
+function fullcalendar_views_preprocess_views_ui_view_preview_section(&$variables) {
+  $view = $variables['view'];
+  $plugin = $view->display_handler->get_option('style_plugin');
+  if ($plugin == 'fullcalendar_view') {
+    $setup  = $view->style_plugin->options['calendar_setup'];
+    if (!empty($setup['event_bg_color'])) {
+      // Inject an inline style tag to allow direct color preview in the views
+      // admin UI.
+      $inline_style = '<style>:root{';
+      $inline_style .= '--fc-event-bg-color:' . $setup['event_bg_color'] . ';';
+      $inline_style .= '--fc-event-border-color:' . $setup['event_bg_color'] . ';';
+      $inline_style .= '--fc-event-text-color:' . $setup['event_text_color'] . ';';
+      $inline_style .= '}</style>';
+      $variables['content'] .= $inline_style;
+    }
+  }
+}

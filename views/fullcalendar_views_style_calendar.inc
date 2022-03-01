@@ -3,6 +3,8 @@
  * @file
  * Definition of FullcalendarViewsStyleCalendar.
  */
+define('FC_VIEWS_DEFAULT_BG_COLOR', '#5c88aa');
+define('FC_VIEWS_DEFAULT_TEXT_COLOR', '#ffffff');
 
 /**
  * Provides a views style to display dates in a FullCalendar.
@@ -35,6 +37,8 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
         'allDaySlot' => TRUE,
         'slotMinTime' => '',
         'slotMaxTime' => '',
+        'event_bg_color' => FC_VIEWS_DEFAULT_BG_COLOR,
+        'event_text_color' => FC_VIEWS_DEFAULT_TEXT_COLOR,
       ),
     );
 
@@ -90,7 +94,7 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
     );
     $form['field_mapping']['className'] = array(
       '#type' => 'select',
-      '#title' => t('CSS class'),
+      '#title' => t('CSS class field'),
       '#options' => $all_fields,
       '#default_value' => $mappings['className'],
       '#description' => t('Additional event CSS class based on fields, for example taxonomy term.'),
@@ -139,6 +143,37 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
       '#default_value' => $setup['slotMaxTime'],
       '#description' => t('Last hour to display in week or day view.'),
     );
+    $form['calendar_setup']['event_bg_color'] = array(
+      '#type' => 'color',
+      '#title' => t('Event background color'),
+      '#default_value' => $setup['event_bg_color'],
+    );
+    $form['calendar_setup']['event_text_color'] = array(
+      '#type' => 'color',
+      '#title' => t('Event text color'),
+      '#default_value' => $setup['event_text_color'],
+      '#description' => t('Applies only to text on background color.'),
+    );
+    $form['calendar_setup']['event_colors_reset'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Reset colors to default'),
+      '#default_value' => FALSE,
+      '#description' => t('After form submission colors will get reset to initial values.'),
+    );
+    $form['#attached']['css'][] = backdrop_get_path('module', 'fullcalendar_views') . '/css/fullcalendar-views-admin.css';
+  }
+
+  /**
+   * Overrides views_plugin_style::options_submit().
+   *
+   * Color input element workaround to reset colors.
+   */
+  public function options_submit(&$form, &$form_state) {
+    if ($form_state['values']['style_options']['calendar_setup']['event_colors_reset']) {
+      $form_state['values']['style_options']['calendar_setup']['event_bg_color'] = FC_VIEWS_DEFAULT_BG_COLOR;
+      $form_state['values']['style_options']['calendar_setup']['event_text_color'] = FC_VIEWS_DEFAULT_TEXT_COLOR;
+      unset($form_state['values']['style_options']['calendar_setup']['event_colors_reset']);
+    }
   }
 
   /**
@@ -201,6 +236,16 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
       ),
     );
     backdrop_add_js($setup, 'setting');
+
+    // Add inline css variable.
+    $style_var = ':root{';
+    $style_var .= '--fc-event-bg-color:' . $options['calendar_setup']['event_bg_color'] . ';';
+    $style_var .= '--fc-event-border-color:' . $options['calendar_setup']['event_bg_color'] . ';';
+    $style_var .= '--fc-event-text-color:' . $options['calendar_setup']['event_text_color'] . ';';
+    $style_var .= '}';
+    backdrop_add_css($style_var, array(
+      'type' => 'inline',
+    ));
 
     if (!empty($view->live_preview)) {
       $field_name = $this->options['field_mapping']['date'];

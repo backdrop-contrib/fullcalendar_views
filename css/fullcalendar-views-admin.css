@@ -1,0 +1,7 @@
+.form-type-color input.form-color {
+  height: 40px;
+  padding: 4px;
+}
+.form-type-number input.form-number {
+  width: 7em;
+}
