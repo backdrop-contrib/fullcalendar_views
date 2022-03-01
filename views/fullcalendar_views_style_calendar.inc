@@ -261,7 +261,7 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
             foreach ($classes as $class) {
               $output .= ' ' . backdrop_clean_css_identifier($class);
             }
-            $rendered_field = $output;
+            $rendered_field = trim($output);
           }
           $rendered_fields[$target] = $rendered_field;
         }
