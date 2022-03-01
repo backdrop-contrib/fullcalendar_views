@@ -187,7 +187,7 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
     }
     $module_path = backdrop_get_path('module', 'fullcalendar_views');
     // @todo Library switch?
-    backdrop_add_library('resource_timeslots', 'fullcalendar');
+    backdrop_add_library('fullcalendar_lib', 'fullcalendar');
     backdrop_add_js($module_path . '/js/fullcalendar-views.js');
     backdrop_add_css($module_path . '/css/fullcalendar-views.css');
 
