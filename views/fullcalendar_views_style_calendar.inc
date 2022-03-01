@@ -179,22 +179,7 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
       $events[$index] = $this->renderRow($view, $index);
     }
 
-    // Various options for the calendar display.
-    $settings = array(
-      'locale' => self::getLangcode(),
-      'types' => implode(',', array_filter($options['calendar_setup']['types'])),
-      'weekNumbers' => (bool) $options['calendar_setup']['weekNumbers'],
-      'allDaySlot' => (bool) $options['calendar_setup']['allDaySlot'],
-      'firstDay' => config_get('system.date', 'first_day'),
-    );
-    if (!empty($options['calendar_setup']['slotMinTime'])) {
-      $settings['slotMinTime'] = str_pad($options['calendar_setup']['slotMinTime'], 2, '0', STR_PAD_LEFT) . ':00';
-    }
-    if (!empty($options['calendar_setup']['slotMaxTime'])) {
-      // End display is exclusive.
-      $hour = $options['calendar_setup']['slotMaxTime'] + 1;
-      $settings['slotMaxTime'] = str_pad($hour, 2, '0', STR_PAD_LEFT) . ':00';
-    }
+    $settings = $this->buildCalendarSettings();
     // Only needed if tooltips are enabled.
     if ($options['field_mapping']['tooltip']) {
       backdrop_add_library('system', 'ui.tooltip');
@@ -375,6 +360,31 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
         $rendered_fields['end'] = $raw_values[0]['end'] * 1000;
         break;
     }
+  }
+
+  /**
+   * Helper function to create js settings for FC.
+   */
+  public function buildCalendarSettings() {
+    $options = $this->options['calendar_setup'];
+
+    $settings = array(
+      'locale' => self::getLangcode(),
+      'types' => implode(',', array_filter($options['types'])),
+      'weekNumbers' => (bool) $options['weekNumbers'],
+      'allDaySlot' => (bool) $options['allDaySlot'],
+      'firstDay' => config_get('system.date', 'first_day'),
+    );
+    if (!empty($options['slotMinTime'])) {
+      $settings['slotMinTime'] = str_pad($options['slotMinTime'], 2, '0', STR_PAD_LEFT) . ':00';
+    }
+    if (!empty($options['slotMaxTime'])) {
+      // End display is exclusive.
+      $hour = $options['slotMaxTime'] + 1;
+      $settings['slotMaxTime'] = str_pad($hour, 2, '0', STR_PAD_LEFT) . ':00';
+    }
+
+    return $settings;
   }
 
   /**
