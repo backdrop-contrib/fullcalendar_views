@@ -3,6 +3,7 @@
  * @file
  * Definition of FullcalendarViewsStyleCalendar.
  */
+
 define('FC_VIEWS_DEFAULT_BG_COLOR', '#5c88aa');
 define('FC_VIEWS_DEFAULT_TEXT_COLOR', '#ffffff');
 

@@ -1,5 +1,10 @@
 <?php
 /**
+ * @file
+ * Define views plugin for Fullcalendar Views.
+ */
+
+/**
  * Implements hook_views_plugins().
  */
 function fullcalendar_views_views_plugins() {
