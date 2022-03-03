@@ -395,7 +395,7 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
    * @param array $rendered_fields
    *   Array of rendered field values, usually empty at this point.
    */
-  protected static function parseDateFields(array $raw_values, $type, $date_only, &$rendered_fields) {
+  public static function parseDateFields(array $raw_values, $type, $date_only, &$rendered_fields) {
     switch ($type) {
       case 'date':
       case 'datetime':
