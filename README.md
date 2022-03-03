@@ -3,8 +3,7 @@
 Views style plugin to render all sorts of date fields as events with FullCalendar
  5.x.
 
-Brand new, work in progress, testing is highly appreciated (not on production
- sites!).
+![Calendar screenshot](https://raw.githubusercontent.com/backdrop-contrib/fullcalendar_views/1.x-1.x/screenshots/calendar.png)
 
 ## Installation
 
