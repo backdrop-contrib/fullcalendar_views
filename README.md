@@ -1,7 +1,7 @@
 # Fullcalendar Views NG
 
-Views style plugin to render all sorts of date fields as events with FullCalendar
- 5.x.
+Views style plugin to render all sorts of date fields as events with
+ [FullCalendar 5.x](https://fullcalendar.io/).
 
 ![Calendar screenshot](https://raw.githubusercontent.com/backdrop-contrib/fullcalendar_views/1.x-1.x/screenshots/calendar.png)
 
