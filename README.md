@@ -17,6 +17,12 @@ Create a view with a supported date field type, select the "Fullcalendar NG"
 Important note: if it's a multi-value field, make sure that the "Display all values in the same
 row" setting under "Multiple field settings" of that view field is **not checked**.
 
+### Additional event sources
+
+FullCalendar can parse (external) json feeds for additional events. See the official
+ documentation about [EventSources](https://fullcalendar.io/docs/event-source-object)
+ for more information.
+
 ## Dependencies
 
 - The [Fullcalendar Library](https://backdropcms.org/project/fullcalendar_lib) module

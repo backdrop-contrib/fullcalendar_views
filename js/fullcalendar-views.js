@@ -14,7 +14,7 @@
         var mysettings = this[id].settings;
 
         var options = {
-          events: myevents,
+          eventSources: [ myevents ],
           height: 'auto',
           locale: mysettings.locale,
           weekNumbers: mysettings.weekNumbers,
@@ -70,9 +70,16 @@
           options.initialView = mysettings.types;
         }
 
-        // @todo let extend.
+        // @todo let extend?
         var calendar = new FullCalendar.Calendar(calendarElem, options);
         calendar.render();
+
+        // Additional event sources as json feeds.
+        if (mysettings.eventSources.length) {
+          for (let i = 0; i < mysettings.eventSources.length; i++) {
+            calendar.addEventSource(mysettings.eventSources[i]);
+          }
+        }
       });
     }
   };

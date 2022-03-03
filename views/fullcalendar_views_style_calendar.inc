@@ -39,6 +39,7 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
         'slotMaxTime' => '',
         'event_bg_color' => FC_VIEWS_DEFAULT_BG_COLOR,
         'event_text_color' => FC_VIEWS_DEFAULT_TEXT_COLOR,
+        'add_event_sources' => array(),
       ),
     );
 
@@ -160,7 +161,42 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
       '#default_value' => FALSE,
       '#description' => t('After form submission colors will get reset to initial values.'),
     );
+    $form['calendar_setup']['add_event_sources'] = array(
+      '#type' => 'textarea',
+      '#title' => t('Additional event source URLs'),
+      '#default_value' => implode("\n", $setup['add_event_sources']),
+      '#resizable' => FALSE,
+      '#rows' => 4,
+      '#description' => t('FullCalendar can additionally parse json feeds from other sources. Add one URL per line.'),
+    );
     $form['#attached']['css'][] = backdrop_get_path('module', 'fullcalendar_views') . '/css/fullcalendar-views-admin.css';
+  }
+
+  /**
+   * Overrides views_plugin_style::options_validate().
+   */
+  public function options_validate(&$form, &$form_state) {
+    parent::options_validate($form, $form_state);
+
+    if (!empty($form_state['values']['style_options']['calendar_setup']['add_event_sources'])) {
+      $sources = array();
+      $input = explode("\n", $form_state['values']['style_options']['calendar_setup']['add_event_sources']);
+      foreach ($input as $line) {
+        $line = trim($line);
+        if (empty($line)) {
+          continue;
+        }
+        // Check for valid external or internal url.
+        if (valid_url($line, TRUE)) {
+          $sources[] = $line;
+          continue;
+        }
+        if (valid_url($line, FALSE)) {
+          $sources[] = $line;
+        }
+      }
+      $form_state['values']['style_options']['calendar_setup']['add_event_sources'] = $sources;
+    }
   }
 
   /**
@@ -424,6 +460,7 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
       'weekNumbers' => (bool) $options['weekNumbers'],
       'allDaySlot' => (bool) $options['allDaySlot'],
       'firstDay' => config_get('system.date', 'first_day'),
+      'eventSources' => $options['add_event_sources'],
     );
     if (!empty($options['slotMinTime'])) {
       $settings['slotMinTime'] = str_pad($options['slotMinTime'], 2, '0', STR_PAD_LEFT) . ':00';

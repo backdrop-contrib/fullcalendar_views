@@ -5,3 +5,6 @@
 .form-type-number input.form-number {
   width: 7em;
 }
+.form-textarea-wrapper {
+  max-width: 880px;
+}
