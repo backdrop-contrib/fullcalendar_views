@@ -5,6 +5,17 @@ Views style plugin to render all sorts of date fields as events with FullCalenda
 
 ![Calendar screenshot](https://raw.githubusercontent.com/backdrop-contrib/fullcalendar_views/1.x-1.x/screenshots/calendar.png)
 
+## Supported (date) field types
+
+- Core date
+- Core datetime
+- Core datestamp
+- [Repeating date](https://backdropcms.org/project/repeating_dates)
+- [Resource timeslot](https://backdropcms.org/project/resource_timeslots)
+- Anything supported by views_handler_field_date, like "node created"
+
+If your favorite field type is missing, let us know.
+
 ## Installation
 
 Install this module using the official Backdrop CMS
@@ -25,17 +36,6 @@ FullCalendar can parse (external) json feeds for additional events. See the offi
 ## Dependencies
 
 - The [Fullcalendar Library](https://backdropcms.org/project/fullcalendar_lib) module
-
-## Supported (date) field types
-
-- Core date
-- Core datetime
-- Core datestamp
-- [Repeating date](https://backdropcms.org/project/repeating_dates)
-- [Resource timeslot](https://backdropcms.org/project/resource_timeslots)
-- Anything supported by views_handler_field_date, like "node created"
-
-If your favorite field type is missing, let us know.
 
 ## Issues
 
