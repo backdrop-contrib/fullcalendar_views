@@ -42,6 +42,13 @@ FullCalendar can parse (external) json feeds for additional events. See the offi
 Bugs and feature requests should be reported in the
  [Issue Queue](https://github.com/backdrop-contrib/fullcalendar_views/issues).
 
+## Knowns issues
+
+It is essential to **uninstall** the legacy Fullcalendar module, before you
+install this one.
+See [this issue](https://github.com/backdrop-contrib/fullcalendar_views/issues/7) for
+details.
+
 ## Current maintainers
 
 * [Indigoxela](https://github.com/indigoxela)
