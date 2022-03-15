@@ -17,7 +17,7 @@ class FullcalendarViewsDisplayFeed extends views_plugin_display_page {
   }
 
   /**
-   * Overrides views_plugin_display_page::get_style_type.
+   * Overrides views_plugin_display::get_style_type.
    */
   public function get_style_type() {
     return 'fullcalendar_feed';
