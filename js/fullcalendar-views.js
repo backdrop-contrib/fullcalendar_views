@@ -16,7 +16,6 @@
         var options = {
           eventSources: [ myevents ],
           height: 'auto',
-          locale: mysettings.locale,
           weekNumbers: mysettings.weekNumbers,
           allDaySlot: mysettings.allDaySlot,
           firstDay: mysettings.firstDay,
@@ -47,6 +46,12 @@
             }
           }
         };
+        if (typeof mysettings.browserLocale !== 'undefined' && mysettings.browserLocale) {
+          options.locale = navigator.language || navigator.userLanguage;
+        }
+        else {
+          options.locale = mysettings.locale;
+        }
         if (typeof mysettings.slotMinTime !== 'undefined') {
           options.slotMinTime = mysettings.slotMinTime;
         }

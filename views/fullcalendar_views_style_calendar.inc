@@ -35,6 +35,7 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
           'timeGridDay' => 0,
         ),
         'weekNumbers' => FALSE,
+        'browserLocale' => FALSE,
         'allDaySlot' => TRUE,
         'slotMinTime' => '',
         'slotMaxTime' => '',
@@ -122,6 +123,12 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
       '#title' => t('Display week numbers'),
       '#default_value' => $setup['weekNumbers'],
       '#prefix' => '<p><strong>' . t('Display options') . '</strong></p>',
+    );
+    $form['calendar_setup']['browserLocale'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Follow browser locale'),
+      '#default_value' => $setup['browserLocale'],
+      '#description' => t('Let the calendar localize date lables based on the browser language instead of the page language.'),
     );
     $form['calendar_setup']['allDaySlot'] = array(
       '#type' => 'checkbox',
@@ -458,6 +465,7 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
       'locale' => self::getLangcode(),
       'types' => implode(',', array_filter($options['types'])),
       'weekNumbers' => (bool) $options['weekNumbers'],
+      'browserLocale' => (bool) $options['browserLocale'],
       'allDaySlot' => (bool) $options['allDaySlot'],
       'firstDay' => config_get('system.date', 'first_day'),
       'eventSources' => $options['add_event_sources'],
