@@ -19,7 +19,9 @@ function fullcalendar_views_views_api() {
  */
 function fullcalendar_views_autoload_info() {
   return array(
+    'FullcalendarViewsDisplayFeed' => 'views/fullcalendar_views_display_feed.inc',
     'FullcalendarViewsStyleCalendar' => 'views/fullcalendar_views_style_calendar.inc',
+    'FullcalendarViewsStyleJson' => 'views/fullcalendar_views_style_json.inc',
   );
 }
 
