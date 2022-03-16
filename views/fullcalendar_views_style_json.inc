@@ -138,9 +138,6 @@ class FullcalendarViewsStyleJson extends views_plugin_style {
             }
             $rendered_field = trim($output);
           }
-          elseif ($target == 'title') {
-            $rendered_field = strip_tags($rendered_field);
-          }
           $rendered_fields[$target] = $rendered_field;
         }
       }
