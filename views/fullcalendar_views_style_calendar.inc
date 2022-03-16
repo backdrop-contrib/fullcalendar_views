@@ -205,6 +205,10 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
       }
       $form_state['values']['style_options']['calendar_setup']['add_event_sources'] = $sources;
     }
+    else {
+      // Reset empty string to empty array.
+      $form_state['values']['style_options']['calendar_setup']['add_event_sources'] = array();
+    }
   }
 
   /**
