@@ -76,7 +76,6 @@ class FullcalendarViewsStyleJson extends views_plugin_style {
       '#default_value' => $mappings['className'],
       '#description' => t('Additional event CSS class based on fields, for example taxonomy term.'),
     );
-
   }
 
   /**
