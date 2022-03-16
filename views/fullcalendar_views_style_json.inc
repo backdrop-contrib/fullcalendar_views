@@ -131,12 +131,7 @@ class FullcalendarViewsStyleJson extends views_plugin_style {
         if (!empty($this->rendered_fields[$row_index][$view_field])) {
           $rendered_field = $this->rendered_fields[$row_index][$view_field];
           if ($target == 'className') {
-            $output = '';
-            $classes = explode(' ', $rendered_field);
-            foreach ($classes as $class) {
-              $output .= ' ' . backdrop_clean_css_identifier($class);
-            }
-            $rendered_field = trim($output);
+            $rendered_field = fullcalendar_views_sanitize_css($rendered_field);
           }
           $rendered_fields[$target] = $rendered_field;
         }

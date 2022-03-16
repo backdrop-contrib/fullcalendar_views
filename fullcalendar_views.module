@@ -63,6 +63,24 @@ function fullcalendar_views_supported_field_types() {
 }
 
 /**
+ * Helper function to sanitize CSS classes.
+ *
+ * @param string $input
+ *   Rendered view field value.
+ *
+ * @return string
+ *   Sanitized string usable as CSS class(es).
+ */
+function fullcalendar_views_sanitize_css($input) {
+  $output = '';
+  $classes = explode(' ', $input);
+  foreach ($classes as $class) {
+    $output .= ' ' . backdrop_clean_css_identifier($class);
+  }
+  return trim($output);
+}
+
+/**
  * Parse the various supported date field types into values FC can handle.
  *
  * @param array $raw_values
