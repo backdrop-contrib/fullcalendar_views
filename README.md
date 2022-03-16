@@ -27,6 +27,9 @@ Create a view with a supported date field type, select the "Fullcalendar NG"
 Important note: if it's a multi-value field, make sure that the "Display all values in the same
 row" setting under "Multiple field settings" of that view field is **not checked**.
 
+Some basic instructions are available in the
+ [Wiki](https://github.com/backdrop-contrib/fullcalendar_views/wiki/Create-a-calendar)
+
 ### Additional event sources
 
 FullCalendar can parse (external) json feeds for additional events. See the official
