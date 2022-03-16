@@ -43,8 +43,6 @@ class FullcalendarViewsDisplayFeed extends views_plugin_display_page {
       $rendered = $this->view->render();
       return '<pre>' . check_plain(json_encode($rendered, JSON_PRETTY_PRINT)) . '</pre>';
     }
-    // @todo check when this runs.
-    return $this->view->render();
   }
 
   /**
