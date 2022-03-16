@@ -103,8 +103,7 @@ class FullcalendarViewsStyleJson extends views_plugin_style {
     $rendered_fields = array();
 
     foreach ($mappings as $target => $view_field) {
-      // If an optional date field is empty, we can't display anything in a
-      // calendar. Completely skip it.
+      // If an optional date field is empty, we can't parse it. Skip to prevent notices.
       if ($target == 'date' && empty($this->rendered_fields[$row_index][$view_field])) {
         continue;
       }
