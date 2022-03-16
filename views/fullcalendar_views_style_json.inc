@@ -103,7 +103,8 @@ class FullcalendarViewsStyleJson extends views_plugin_style {
     $rendered_fields = array();
 
     foreach ($mappings as $target => $view_field) {
-      // If an optional date field is empty, we can't parse it. Skip to prevent notices.
+      // If an optional date field is empty, we can't parse it. Skip to prevent
+      // notices.
       if ($target == 'date' && empty($this->rendered_fields[$row_index][$view_field])) {
         continue;
       }
@@ -119,8 +120,7 @@ class FullcalendarViewsStyleJson extends views_plugin_style {
           if (!empty($field->field_info['settings']['granularity']) && !$field->field_info['settings']['granularity']['hour']) {
             $date_only = TRUE;
           }
-          // @todo is the class always loaded?
-          FullcalendarViewsStyleCalendar::parseDateFields($raw_values, $type, $date_only, $rendered_fields);
+          fullcalendar_views_parse_date_fields($raw_values, $type, $date_only, $rendered_fields);
         }
         // Anything directly supported by views_handler_field_date.
         else {
