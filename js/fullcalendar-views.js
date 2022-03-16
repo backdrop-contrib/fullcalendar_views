@@ -21,6 +21,10 @@
           firstDay: mysettings.firstDay,
           eventDidMount: function(arg) {
             if (mysettings.hasTooltips === true) {
+              // Different feeds may have tooltips or not.
+              if (typeof arg.event.extendedProps.tooltip === 'undefined') {
+                return;
+              }
               arg.el.setAttribute('data-tooltip', arg.event.extendedProps.tooltip);
               $(arg.el).tooltip({
                 position: {
