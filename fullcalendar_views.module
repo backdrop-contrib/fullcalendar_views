@@ -45,3 +45,18 @@ function fullcalendar_views_preprocess_views_ui_view_preview_section(&$variables
     }
   }
 }
+
+/**
+ * Helper function to return supported field API types.
+ *
+ * @see FullcalendarViewsStyleJson::getDateFieldCandidates()
+ */
+function fullcalendar_views_supported_field_types() {
+  return array(
+    'date',
+    'datetime',
+    'datestamp',
+    'repeating_date',
+    'resource_timeslot',
+  );
+}

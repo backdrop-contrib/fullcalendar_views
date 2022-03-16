@@ -367,14 +367,7 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
         $field_candidates[$alias] = $label;
       }
       elseif ($handler_class == 'views_handler_field_field') {
-        // Core date fields, other date fields.
-        $supported = array(
-          'date',
-          'datetime',
-          'datestamp',
-          'repeating_date',
-          'resource_timeslot',
-        );
+        $supported = fullcalendar_views_supported_field_types();
         $field_type = $handlers[$alias]->field_info['type'];
         if (in_array($field_type, $supported)) {
           $field_candidates[$alias] = $label;
