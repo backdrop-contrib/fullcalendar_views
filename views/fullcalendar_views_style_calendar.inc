@@ -240,6 +240,12 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
    * Overrides views_plugin_style::render().
    */
   public function render() {
+    // Do nothing on layout admin pages containing fullcalendar_views blocks.
+    $path = current_path();
+    if (strpos($path, 'admin/structure/layouts/manage') === 0) {
+      return;
+    }
+
     // A calendar always needs dates.
     $date_fields = $this->getDateFieldCandidates();
     if (empty($date_fields)) {
