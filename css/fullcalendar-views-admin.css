@@ -1,6 +1,15 @@
 .form-type-color input.form-color {
-  height: 40px;
-  padding: 4px;
+  height: 35px;
+  width: 35px;
+  padding: 0;
+  border: none;
+  border-radius: 100%;
+}
+.form-type-color input::-moz-color-swatch {
+  border-radius: 100%;
+}
+.form-type-color input::-webkit-color-swatch {
+  border-radius: 100%;
 }
 .form-type-number input.form-number {
   width: 7em;
