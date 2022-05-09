@@ -2,7 +2,7 @@
   height: 35px;
   width: 35px;
   padding: 0;
-  border: none;
+  border: 1px solid;
   border-radius: 100%;
 }
 .form-type-color input::-moz-color-swatch {
