@@ -51,6 +51,8 @@ function fullcalendar_views_preprocess_views_ui_view_preview_section(&$variables
  *
  * @see FullcalendarViewsStyleCalendar::getDateFieldCandidates()
  * @see FullcalendarViewsStyleJson::getDateFieldCandidates()
+ *
+ * @return array<string>
  */
 function fullcalendar_views_supported_field_types() {
   return array(
@@ -83,14 +85,16 @@ function fullcalendar_views_sanitize_css($input) {
 /**
  * Parse the various supported date field types into values FC can handle.
  *
- * @param array $raw_values
+ * @param array<mixed> $raw_values
  *   Raw views result values provided by get_field_value().
  * @param string $type
  *   The field type as defined in hook_field_info().
  * @param bool $date_only
  *   Whether this field should be handled without time.
- * @param array $rendered_fields
+ * @param array<mixed> $rendered_fields
  *   Array of rendered field values, usually empty at this point.
+ *
+ * @return void
  *
  * @see FullcalendarViewsStyleCalendar::renderRow()
  * @see FullcalendarViewsStyleJson::renderRow()

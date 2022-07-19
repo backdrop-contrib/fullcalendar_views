@@ -11,6 +11,8 @@ class FullcalendarViewsDisplayFeed extends views_plugin_display_page {
 
   /**
    * Overrides views_plugin_display_page::uses_breadcrumb.
+   *
+   * @return false
    */
   public function uses_breadcrumb() {
     return FALSE;
@@ -18,6 +20,8 @@ class FullcalendarViewsDisplayFeed extends views_plugin_display_page {
 
   /**
    * Overrides views_plugin_display::get_style_type.
+   *
+   * @return string
    */
   public function get_style_type() {
     return 'fullcalendar_feed';
@@ -25,6 +29,8 @@ class FullcalendarViewsDisplayFeed extends views_plugin_display_page {
 
   /**
    * Overrides views_plugin_display_page::execute().
+   *
+   * @return mixed
    */
   public function execute() {
     $output = $this->view->render();
@@ -37,19 +43,25 @@ class FullcalendarViewsDisplayFeed extends views_plugin_display_page {
 
   /**
    * Overrides views_plugin_display_page::preview().
+   *
+   * @return string|null
    */
   public function preview() {
     if (!empty($this->view->live_preview)) {
       $rendered = $this->view->render();
-      return '<pre>' . check_plain(json_encode($rendered, JSON_PRETTY_PRINT)) . '</pre>';
+      $json = (string) json_encode($rendered, JSON_PRETTY_PRINT);
+      return '<pre>' . check_plain($json) . '</pre>';
     }
+    return NULL;
   }
 
   /**
    * Overrides views_plugin_display_page::render().
+   *
+   * @return string
    */
   public function render() {
-    return $this->view->style_plugin->render($this->view->result);
+    return $this->view->style_plugin->render();
   }
 
 }

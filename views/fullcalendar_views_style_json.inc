@@ -11,6 +11,8 @@ class FullcalendarViewsStyleJson extends views_plugin_style {
 
   /**
    * Overrides views_plugin_style::option_definition().
+   *
+   * @return array<mixed>
    */
   public function option_definition() {
     $options = parent::option_definition();
@@ -28,6 +30,9 @@ class FullcalendarViewsStyleJson extends views_plugin_style {
 
   /**
    * Overrides views_plugin_style::options_form().
+   *
+   * @param array<mixed> $form
+   * @param array<mixed> $form_state
    */
   public function options_form(&$form, &$form_state) {
     parent::options_form($form, $form_state);
@@ -80,6 +85,8 @@ class FullcalendarViewsStyleJson extends views_plugin_style {
 
   /**
    * Overrides views_plugin_style::render().
+   *
+   * @return array<mixed>
    */
   public function render() {
     $view = $this->view;
@@ -96,6 +103,11 @@ class FullcalendarViewsStyleJson extends views_plugin_style {
 
   /**
    * Custom callback to override row style.
+   *
+   * @param view $view
+   * @param int $row_index
+   *
+   * @return array<mixed>
    */
   public function renderRow($view, $row_index) {
     $mappings = $this->options['field_mapping'];
@@ -142,6 +154,8 @@ class FullcalendarViewsStyleJson extends views_plugin_style {
 
   /**
    * Filter the list of views fields down to only supported date-type fields.
+   *
+   * @return array<mixed>
    */
   protected function getDateFieldCandidates() {
     $all_fields = $this->display->handler->get_field_labels();
