@@ -14,6 +14,8 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
 
   /**
    * Overrides views_plugin_style::option_definition().
+   *
+   * @return array<mixed>
    */
   public function option_definition() {
     $options = parent::option_definition();
@@ -50,6 +52,9 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
 
   /**
    * Overrides views_plugin_style::options_form().
+   *
+   * @param array<mixed> $form
+   * @param array<mixed> $form_state
    */
   public function options_form(&$form, &$form_state) {
     parent::options_form($form, $form_state);
@@ -182,6 +187,9 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
 
   /**
    * Overrides views_plugin_style::options_validate().
+   *
+   * @param array<mixed> $form
+   * @param array<mixed> $form_state
    */
   public function options_validate(&$form, &$form_state) {
     parent::options_validate($form, $form_state);
@@ -215,6 +223,9 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
    * Overrides views_plugin_style::options_submit().
    *
    * Color input element workaround to reset colors.
+   *
+   * @param array<mixed> $form
+   * @param array<mixed> $form_state
    */
   public function options_submit(&$form, &$form_state) {
     if ($form_state['values']['style_options']['calendar_setup']['event_colors_reset']) {
@@ -238,12 +249,14 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
 
   /**
    * Overrides views_plugin_style::render().
+   *
+   * @return null|string
    */
   public function render() {
     // Do nothing on layout admin pages containing fullcalendar_views blocks.
     $path = current_path();
     if (strpos($path, 'admin/structure/layouts/manage') === 0) {
-      return;
+      return NULL;
     }
 
     // A calendar always needs dates.
@@ -253,7 +266,7 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
       if (!empty($this->view->live_preview)) {
         backdrop_set_message(t('No date field available.'), 'warning');
       }
-      return;
+      return NULL;
     }
 
     global $language;
@@ -321,6 +334,11 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
 
   /**
    * Prepare row output for FullCalendar.
+   *
+   * @param view $view
+   * @param int $row_index
+   *
+   * @return array<mixed>
    */
   public function renderRow($view, $row_index) {
     $mappings = $this->options['field_mapping'];
@@ -369,6 +387,8 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
 
   /**
    * Filter the list of views fields down to only supported date-type fields.
+   *
+   * @return array<mixed>
    */
   protected function getDateFieldCandidates() {
     $all_fields = $this->display->handler->get_field_labels();
@@ -394,6 +414,8 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
 
   /**
    * Helper function to create js settings for FC.
+   *
+   * @return array<mixed>
    */
   public function buildCalendarSettings() {
     $options = $this->options['calendar_setup'];
@@ -413,7 +435,7 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
     if (!empty($options['slotMaxTime'])) {
       // End display is exclusive.
       $hour = $options['slotMaxTime'] + 1;
-      $settings['slotMaxTime'] = str_pad($hour, 2, '0', STR_PAD_LEFT) . ':00';
+      $settings['slotMaxTime'] = str_pad((string) $hour, 2, '0', STR_PAD_LEFT) . ':00';
     }
 
     return $settings;
@@ -421,6 +443,8 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
 
   /**
    * Helper function to set the proper locale for FullCalendar.
+   *
+   * @return string
    */
   public static function getLangcode() {
     global $language;
