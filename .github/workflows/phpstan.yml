@@ -5,6 +5,9 @@ jobs:
     name: PHPStan
     runs-on: ubuntu-20.04
     steps:
+      - name: Setup env
+        run: echo "REPO_NAME=${PWD##*/}" >> $GITHUB_ENV
+
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
