@@ -317,7 +317,7 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
       $field_name = $this->options['field_mapping']['date'];
       if (!empty($field_name)) {
         $field = $view->field[$field_name];
-        if ($field->options['group_rows']) {
+        if (!empty($field->options['group_rows'])) {
           $field_info = field_info_field($field_name);
           if ($field_info['cardinality'] > 1) {
             $message = t('The "Multiple field setting" for the %field field is currently to display all in one row, which is not recommended.', array(
