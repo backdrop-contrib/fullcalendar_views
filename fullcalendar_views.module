@@ -103,17 +103,37 @@ function fullcalendar_views_parse_date_fields(array $raw_values, $type, $date_on
   switch ($type) {
     case 'date':
     case 'datetime':
-      $tz = $raw_values[0]['timezone_db'];
-      $start = new BackdropDateTime($raw_values[0]['value'], $tz);
+      $tz_db = $raw_values[0]['timezone_db'];
+      $tz = $raw_values[0]['timezone'];
+      $start = new BackdropDateTime($raw_values[0]['value'], $tz_db);
+      if ($tz != $tz_db) {
+        $start->setTimezone(new DateTimeZone($tz));
+      }
+
+      // End dates are exclusive, so if both are the same, we have to increment.
+      $increment_end = FALSE;
+      if (!empty($raw_values[0]['value2']) && $raw_values[0]['value2'] == $raw_values[0]['value']) {
+        $date_only = TRUE;
+        $increment_end = TRUE;
+      }
+
       if ($date_only) {
         $rendered_fields['start'] = $start->format('Y-m-d');
       }
       else {
         $rendered_fields['start'] = $start->format('U') * 1000;
       }
+
       if (!empty($raw_values[0]['value2'])) {
-        $end = new BackdropDateTime($raw_values[0]['value2'], $tz);
+        $end = new BackdropDateTime($raw_values[0]['value2'], $tz_db);
+        if ($tz != $tz_db) {
+          $end->setTimezone(new DateTimeZone($tz));
+        }
+
         if ($date_only) {
+          if ($increment_end) {
+            $end->modify('+1 day');
+          }
           $rendered_fields['end'] = $end->format('Y-m-d');
         }
         else {
@@ -130,10 +150,21 @@ function fullcalendar_views_parse_date_fields(array $raw_values, $type, $date_on
         $rendered_fields['start'] = $raw_values[0]['value'] * 1000;
       }
       if (!empty($raw_values[0]['value2'])) {
+        $increment_end = FALSE;
+        // End dates are exclusive.
+        if ($raw_values[0]['value2'] == $raw_values[0]['value']) {
+          $increment_end = TRUE;
+        }
         if ($date_only) {
+          if ($increment_end) {
+            $raw_values[0]['value2'] = $raw_values[0]['value2'] + 3600 * 24;
+          }
           $rendered_fields['end'] = format_date($raw_values[0]['value2'], 'custom', 'Y-m-d');
         }
         else {
+          if ($increment_end) {
+            $raw_values[0]['value2'] = $raw_values[0]['value2'] + 1;
+          }
           $rendered_fields['end'] = $raw_values[0]['value2'] * 1000;
         }
       }
