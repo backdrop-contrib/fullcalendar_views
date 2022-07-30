@@ -105,9 +105,25 @@ function fullcalendar_views_parse_date_fields(array $raw_values, $type, $date_on
     case 'datetime':
       $tz_db = $raw_values[0]['timezone_db'];
       $tz = $raw_values[0]['timezone'];
+      $increment_end = FALSE;
+
       $start = new BackdropDateTime($raw_values[0]['value'], $tz_db);
       if ($tz != $tz_db) {
         $start->setTimezone(new DateTimeZone($tz));
+      }
+      if (!empty($raw_values[0]['value2'])) {
+        $end = new BackdropDateTime($raw_values[0]['value2'], $tz_db);
+        if ($tz != $tz_db) {
+          $end->setTimezone(new DateTimeZone($tz));
+        }
+        // End dates are exclusive in FC, so if two values are the same we have
+        // to increment the end.
+        if ($start == $end) {
+          $increment_end = TRUE;
+          if (date_is_all_day($start->format('Y-m-d H:i:s'), $end->format('Y-m-d H:i:s'))) {
+            $date_only = TRUE;
+          }
+        }
       }
 
       if ($date_only) {
@@ -117,16 +133,17 @@ function fullcalendar_views_parse_date_fields(array $raw_values, $type, $date_on
         $rendered_fields['start'] = $start->format('U') * 1000;
       }
 
-      if (!empty($raw_values[0]['value2'])) {
-        $end = new BackdropDateTime($raw_values[0]['value2'], $tz_db);
-        if ($tz != $tz_db) {
-          $end->setTimezone(new DateTimeZone($tz));
-        }
-
+      if (isset($end)) {
         if ($date_only) {
+          if ($increment_end) {
+            $end->modify('+1 day');
+          }
           $rendered_fields['end'] = $end->format('Y-m-d');
         }
         else {
+          if ($increment_end) {
+            $end->modify('+1 second');
+          }
           $rendered_fields['end'] = $end->format('U') * 1000;
         }
       }
