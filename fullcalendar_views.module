@@ -100,12 +100,15 @@ function fullcalendar_views_sanitize_css($input) {
  * @see FullcalendarViewsStyleJson::renderRow()
  */
 function fullcalendar_views_parse_date_fields(array $raw_values, $type, $date_only, &$rendered_fields) {
+  // @todo Should't increment always be true for date_only?
+  $increment_end = FALSE;
+
   switch ($type) {
     case 'date':
     case 'datetime':
       $tz_db = $raw_values[0]['timezone_db'];
       $tz = $raw_values[0]['timezone'];
-      $increment_end = FALSE;
+      $end = FALSE;
 
       $start = new BackdropDateTime($raw_values[0]['value'], $tz_db);
       if ($tz != $tz_db) {
@@ -120,9 +123,9 @@ function fullcalendar_views_parse_date_fields(array $raw_values, $type, $date_on
         // to increment the end.
         if ($start == $end) {
           $increment_end = TRUE;
-          if (date_is_all_day($start->format('Y-m-d H:i:s'), $end->format('Y-m-d H:i:s'))) {
-            $date_only = TRUE;
-          }
+        }
+        if (date_is_all_day($start->format('Y-m-d H:i:s'), $end->format('Y-m-d H:i:s'))) {
+          $date_only = TRUE;
         }
       }
 
@@ -133,7 +136,7 @@ function fullcalendar_views_parse_date_fields(array $raw_values, $type, $date_on
         $rendered_fields['start'] = $start->format('U') * 1000;
       }
 
-      if (isset($end)) {
+      if ($end) {
         if ($date_only) {
           if ($increment_end) {
             $end->modify('+1 day');
@@ -150,25 +153,69 @@ function fullcalendar_views_parse_date_fields(array $raw_values, $type, $date_on
       break;
 
     case 'datestamp':
+      $start = $raw_values[0]['value'];
+      $end = FALSE;
+      if (!empty($raw_values[0]['value2'])) {
+        $end = $raw_values[0]['value2'];
+        if ($start == $end) {
+          $increment_end = TRUE;
+        }
+        $start_str = format_date($start, 'custom', 'Y-m-d H:i:s');
+        $end_str = format_date($end, 'custom', 'Y-m-d H:i:s');
+        if (date_is_all_day($start_str, $end_str)) {
+          $date_only = TRUE;
+        }
+      }
+
       if ($date_only) {
-        $rendered_fields['start'] = format_date($raw_values[0]['value'], 'custom', 'Y-m-d');
+        $rendered_fields['start'] = format_date($start, 'custom', 'Y-m-d');
       }
       else {
-        $rendered_fields['start'] = $raw_values[0]['value'] * 1000;
+        $rendered_fields['start'] = $start * 1000;
       }
-      if (!empty($raw_values[0]['value2'])) {
+
+      if ($end) {
         if ($date_only) {
-          $rendered_fields['end'] = format_date($raw_values[0]['value2'], 'custom', 'Y-m-d');
+          if ($increment_end) {
+            $end = $end + 3600 * 24;
+          }
+          $rendered_fields['end'] = format_date($end, 'custom', 'Y-m-d');
         }
         else {
-          $rendered_fields['end'] = $raw_values[0]['value2'] * 1000;
+          if ($increment_end) {
+            $end = $end + 1;
+          }
+          $rendered_fields['end'] = $end * 1000;
         }
       }
       break;
 
     case 'repeating_date':
-      $rendered_fields['start'] = $raw_values[0]['dtstart'] * 1000;
-      $rendered_fields['end'] = $raw_values[0]['dtend'] * 1000;
+      $start = $raw_values[0]['dtstart'];
+      $end = $raw_values[0]['dtend'];
+      if ($start == $end) {
+        $increment_end = TRUE;
+      }
+      $start_str = format_date($start, 'custom', 'Y-m-d H:i:s');
+      $end_str = format_date($end, 'custom', 'Y-m-d H:i:s');
+      if (date_is_all_day($start_str, $end_str)) {
+        $date_only = TRUE;
+      }
+
+      if ($date_only) {
+        $rendered_fields['start'] = format_date($start, 'custom', 'Y-m-d');
+        if ($increment_end) {
+          $end = $end + 3600 * 24;
+        }
+        $rendered_fields['end'] = format_date($end, 'custom', 'Y-m-d');
+      }
+      else {
+        $rendered_fields['start'] = $start * 1000;
+        if ($increment_end) {
+          $end = $end + 1;
+        }
+        $rendered_fields['end'] = $end * 1000;
+      }
       break;
 
     case 'resource_timeslot':
