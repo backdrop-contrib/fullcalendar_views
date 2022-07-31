@@ -189,7 +189,7 @@ function fullcalendar_views_parse_date_fields(array $raw_values, $type, $date_on
         }
         else {
           if ($increment_end) {
-            $end = $end + 1;
+            ++$end;
           }
           $rendered_fields['end'] = $end * 1000;
         }
@@ -219,7 +219,7 @@ function fullcalendar_views_parse_date_fields(array $raw_values, $type, $date_on
       else {
         $rendered_fields['start'] = $start * 1000;
         if ($increment_end) {
-          $end = $end + 1;
+          ++$end;
         }
         $rendered_fields['end'] = $end * 1000;
       }
