@@ -100,8 +100,11 @@ function fullcalendar_views_sanitize_css($input) {
  * @see FullcalendarViewsStyleJson::renderRow()
  */
 function fullcalendar_views_parse_date_fields(array $raw_values, $type, $date_only, &$rendered_fields) {
-  // @todo Should't increment always be true for date_only?
   $increment_end = FALSE;
+  // For date_only we need to increment, so the last day is inclusive.
+  if ($date_only) {
+    $increment_end = TRUE;
+  }
 
   switch ($type) {
     case 'date':
@@ -124,7 +127,9 @@ function fullcalendar_views_parse_date_fields(array $raw_values, $type, $date_on
         if ($start == $end) {
           $increment_end = TRUE;
         }
+        // Same as above, also with different dates.
         if (date_is_all_day($start->format('Y-m-d H:i:s'), $end->format('Y-m-d H:i:s'))) {
+          $increment_end = TRUE;
           $date_only = TRUE;
         }
       }
@@ -163,6 +168,7 @@ function fullcalendar_views_parse_date_fields(array $raw_values, $type, $date_on
         $start_str = format_date($start, 'custom', 'Y-m-d H:i:s');
         $end_str = format_date($end, 'custom', 'Y-m-d H:i:s');
         if (date_is_all_day($start_str, $end_str)) {
+          $increment_end = TRUE;
           $date_only = TRUE;
         }
       }
@@ -199,6 +205,7 @@ function fullcalendar_views_parse_date_fields(array $raw_values, $type, $date_on
       $start_str = format_date($start, 'custom', 'Y-m-d H:i:s');
       $end_str = format_date($end, 'custom', 'Y-m-d H:i:s');
       if (date_is_all_day($start_str, $end_str)) {
+        $increment_end = TRUE;
         $date_only = TRUE;
       }
 
