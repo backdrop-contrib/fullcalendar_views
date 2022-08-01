@@ -3,59 +3,59 @@ parameters:
 		-
 			message: "#^Function fullcalendar_views_autoload_info\\(\\) has no return type specified\\.$#"
 			count: 1
-			path: fullcalendar_views.module
+			path: ../../fullcalendar_views.module
 
 		-
 			message: "#^Function fullcalendar_views_preprocess_views_ui_view_preview_section\\(\\) has no return type specified\\.$#"
 			count: 1
-			path: fullcalendar_views.module
+			path: ../../fullcalendar_views.module
 
 		-
 			message: "#^Function fullcalendar_views_preprocess_views_ui_view_preview_section\\(\\) has parameter \\$variables with no type specified\\.$#"
 			count: 1
-			path: fullcalendar_views.module
+			path: ../../fullcalendar_views.module
 
 		-
 			message: "#^Function fullcalendar_views_views_api\\(\\) has no return type specified\\.$#"
 			count: 1
-			path: fullcalendar_views.module
+			path: ../../fullcalendar_views.module
 
 		-
 			message: "#^Function fullcalendar_views_views_plugins\\(\\) has no return type specified\\.$#"
 			count: 1
-			path: views/fullcalendar_views.views.inc
+			path: ../../views/fullcalendar_views.views.inc
 
 		-
 			message: "#^Access to an undefined property views_display\\:\\:\\$handler\\.$#"
 			count: 5
-			path: views/fullcalendar_views_style_calendar.inc
+			path: ../../views/fullcalendar_views_style_calendar.inc
 
 		-
 			message: "#^Method FullcalendarViewsStyleCalendar\\:\\:options_form\\(\\) has no return type specified\\.$#"
 			count: 1
-			path: views/fullcalendar_views_style_calendar.inc
+			path: ../../views/fullcalendar_views_style_calendar.inc
 
 		-
 			message: "#^Method FullcalendarViewsStyleCalendar\\:\\:options_submit\\(\\) has no return type specified\\.$#"
 			count: 1
-			path: views/fullcalendar_views_style_calendar.inc
+			path: ../../views/fullcalendar_views_style_calendar.inc
 
 		-
 			message: "#^Method FullcalendarViewsStyleCalendar\\:\\:options_validate\\(\\) has no return type specified\\.$#"
 			count: 1
-			path: views/fullcalendar_views_style_calendar.inc
+			path: ../../views/fullcalendar_views_style_calendar.inc
 
 		-
 			message: "#^Method FullcalendarViewsStyleCalendar\\:\\:query\\(\\) has no return type specified\\.$#"
 			count: 1
-			path: views/fullcalendar_views_style_calendar.inc
+			path: ../../views/fullcalendar_views_style_calendar.inc
 
 		-
 			message: "#^Access to an undefined property views_display\\:\\:\\$handler\\.$#"
 			count: 3
-			path: views/fullcalendar_views_style_json.inc
+			path: ../../views/fullcalendar_views_style_json.inc
 
 		-
 			message: "#^Method FullcalendarViewsStyleJson\\:\\:options_form\\(\\) has no return type specified\\.$#"
 			count: 1
-			path: views/fullcalendar_views_style_json.inc
+			path: ../../views/fullcalendar_views_style_json.inc

@@ -1,10 +1,11 @@
 includes:
-  - phpstan-baseline.neon
+  - baseline.neon
 parameters:
   level: 8
   scanDirectories:
-    - ../../core
-    - ../
+    - ../../../../core
+    - ../../../
   fileExtensions:
     - module
     - inc
+    - test

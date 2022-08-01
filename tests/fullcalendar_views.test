@@ -11,6 +11,8 @@ class FullcalendarViewsUnitTestCase extends BackdropUnitTestCase {
 
   /**
    * Test that function fullcalendar_views_parse_date_fields works.
+   *
+   * @return void
    */
   public function testDateParsing() {
     date_default_timezone_set('Europe/Berlin');
@@ -26,6 +28,8 @@ class FullcalendarViewsUnitTestCase extends BackdropUnitTestCase {
 
   /**
    * Returns test data as array.
+   *
+   * @return array<mixed>
    */
   protected function getRawValueData() {
     $values = array();
