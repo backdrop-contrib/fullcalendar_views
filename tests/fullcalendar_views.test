@@ -18,16 +18,14 @@ class FullcalendarViewsUnitTestCase extends BackdropUnitTestCase {
     date_default_timezone_set('Europe/Berlin');
     $data = $this->getRawValueData();
 
-    // Unit test and GHA:
+    // Unit test and GHA seem a bit special:
     if (!function_exists('fullcalendar_views_parse_date_fields')) {
+      // @phpstan-ignore-next-line
       require_once BACKDROP_ROOT . '/modules/fullcalendar_views/fullcalendar_views.module';
     }
-    var_dump(function_exists('fullcalendar_views_parse_date_fields'));
-    var_dump(function_exists('format_date'));
 
     foreach ($data as $item) {
       $rendered_fields = array();
-      var_dump(function_exists('fullcalendar_views_parse_date_fields'));
 
       fullcalendar_views_parse_date_fields($item['raw'], $item['type'], $item['date_only'], $rendered_fields);
       $this->assertTrue(($rendered_fields === $item['result']), $item['message']);
