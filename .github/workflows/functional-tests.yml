@@ -56,4 +56,4 @@ jobs:
           core/scripts/install.sh --db-url=mysql://root:root@127.0.0.1/backdrop
 
       - name: Run functional tests
-        run: core/scripts/run-tests.sh --force --directory=modules/${{ env.REPO_NAME }} --verbose --color --concurrency=3 --cache 2>&1
+        run: core/scripts/run-tests.sh --force --directory=modules/${{ env.REPO_NAME }} --verbose --color 2>&1
