@@ -1,0 +1,151 @@
+<?php
+/**
+ * @file
+ * Functional tests for the Fullcalendar Views NG module.
+ */
+
+/**
+ * Simple unit test.
+ */
+class FullcalendarViewsUnitTestCase extends BackdropUnitTestCase {
+
+  /**
+   * Test that function fullcalendar_views_parse_date_fields works.
+   */
+  public function testDateParsing() {
+    date_default_timezone_set('Europe/Berlin');
+    $data = $this->getRawValueData();
+
+    foreach ($data as $item) {
+      $rendered_fields = array();
+
+      fullcalendar_views_parse_date_fields($item['raw'], $item['type'], $item['date_only'], $rendered_fields);
+      $this->assertTrue(($rendered_fields === $item['result']), $item['message']);
+    }
+  }
+
+  /**
+   * Returns test data as array.
+   */
+  protected function getRawValueData() {
+    $values = array();
+
+    // Field type "date".
+    $values['datetime_timestamps']['message'] = 'ISO date pair with different values turns into timestamp pair';
+    $values['datetime_timestamps']['raw'] = array(
+      0 => array(
+        'value' => '2022-02-26T13:00:00',
+        'value2' => '2022-02-27T11:00:00',
+        'timezone' => 'Europe/Berlin',
+        'timezone_db' => 'UTC',
+        'date_type' => 'date',
+      ),
+    );
+    $values['datetime_timestamps']['type'] = 'date';
+    $values['datetime_timestamps']['date_only'] = FALSE;
+    $values['datetime_timestamps']['result'] = array(
+      'start' => 1645880400000,
+      'end' => 1645959600000,
+    );
+
+    $values['datetime_allday']['message'] = 'ISO date pair turns into date only values, last day inclusive';
+    $values['datetime_allday']['raw'] = array(
+      0 => array(
+        'value' => '2022-08-02T22:00:00',
+        'value2' => '2022-08-04T22:00:00',
+        'timezone' => 'Europe/Berlin',
+        'timezone_db' => 'UTC',
+        'date_type' => 'date',
+      ),
+    );
+    $values['datetime_allday']['type'] = 'date';
+    $values['datetime_allday']['date_only'] = FALSE;
+    $values['datetime_allday']['result'] = array(
+      'start' => '2022-08-03',
+      'end' => '2022-08-06',
+    );
+
+    // Field type "datetime".
+    $values['date_noend']['message'] = 'Datetime without end datetime turns into single timestamp';
+    $values['date_noend']['raw'] = array(
+      0 => array(
+        'value' => '2022-07-29 22:00:00',
+        'timezone' => 'Europe/Berlin',
+        'timezone_db' => 'UTC',
+        'date_type' => 'datetime',
+      ),
+    );
+    $values['date_noend']['type'] = 'datetime';
+    $values['date_noend']['date_only'] = FALSE;
+    $values['date_noend']['result'] = array(
+      'start' => 1659132000000,
+    );
+
+    // Field type "datestamp".
+    $values['datestamp_noend']['message'] = 'Timestamp without end value turns into single timestamp';
+    $values['datestamp_noend']['raw'] = array(
+      0 => array(
+        'value' => '1645527600',
+        'timezone' => 'Europe/Berlin',
+        'timezone_db' => 'UTC',
+        'date_type' => 'datestamp',
+      ),
+    );
+    $values['datestamp_noend']['type'] = 'datestamp';
+    $values['datestamp_noend']['date_only'] = FALSE;
+    $values['datestamp_noend']['result'] = array(
+      'start' => 1645527600000,
+    );
+
+    $values['datestamp_end']['message'] = 'Timestamp pair, qualified as all-day turns into date only pair';
+    $values['datestamp_end']['raw'] = array(
+      0 => array(
+        'value' => '1659391200',
+        'value2' => '1659391200',
+        'timezone' => 'Europe/Berlin',
+        'timezone_db' => 'Europe/Berlin',
+        'date_type' => 'datestamp',
+      ),
+    );
+    $values['datestamp_end']['type'] = 'datestamp';
+    $values['datestamp_end']['date_only'] = FALSE;
+    $values['datestamp_end']['result'] = array(
+      'start' => '2022-08-02',
+      'end' => '2022-08-03',
+    );
+
+    // Field type repeating dates.
+    $values['rep_timestamps']['message'] = 'Repeating dates with different values turns into timestamp pair';
+    $values['rep_timestamps']['raw'] = array(
+      0 => array(
+        'dtstart' => '1667719800',
+        'dtend' => '1667723400',
+        'rrule' => 'RRULE:FREQ=MONTHLY;BYSETPOS=1;BYDAY=SU;INTERVAL=1;COUNT=20;WKST=MO' . "\r\n" . 'EXDATE;TZID=Europe/Berlin:20230702T083000',
+      ),
+    );
+    $values['rep_timestamps']['type'] = 'repeating_date';
+    $values['rep_timestamps']['date_only'] = FALSE;
+    $values['rep_timestamps']['result'] = array(
+      'start' => 1667719800000,
+      'end' => 1667723400000,
+    );
+
+    $values['rep_dateonly']['message'] = 'Repeating dates with same values turns into date pair, end is incremented';
+    $values['rep_dateonly']['raw'] = array(
+      0 => array(
+        'dtstart' => '1660168800',
+        'dtend' => '1660168800',
+        'rrule' => 'RRULE:FREQ=WEEKLY;BYDAY=TH;INTERVAL=1;UNTIL=20221029T220000Z;WKST=MO',
+      ),
+    );
+    $values['rep_dateonly']['type'] = 'repeating_date';
+    $values['rep_dateonly']['date_only'] = FALSE;
+    $values['rep_dateonly']['result'] = array(
+      'start' => '2022-08-11',
+      'end' => '2022-08-12',
+    );
+
+    return $values;
+  }
+
+}
