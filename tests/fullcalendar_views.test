@@ -15,11 +15,15 @@ class FullcalendarViewsUnitTestCase extends BackdropUnitTestCase {
    * @return void
    */
   public function testDateParsing() {
-    var_dump(date_default_timezone_get());
     date_default_timezone_set('Europe/Berlin');
-    var_dump(date_default_timezone_get());
     $data = $this->getRawValueData();
-    var_dump($data);
+
+    // Unit test and GHA:
+    if (!function_exists('fullcalendar_views_parse_date_fields')) {
+      require_once BACKDROP_ROOT . '/modules/fullcalendar_views/fullcalendar_views.module';
+    }
+    var_dump(function_exists('fullcalendar_views_parse_date_fields'));
+    var_dump(function_exists('format_date'));
 
     foreach ($data as $item) {
       $rendered_fields = array();
