@@ -1,0 +1,5 @@
+[FullcalendarViewsUnitTestCase]
+name = Fullcalendar Views NG Unit Test
+description = Simple checks for the Fullcalendar Views NG module.
+group = fullcalendar_views
+file = fullcalendar_views.test
