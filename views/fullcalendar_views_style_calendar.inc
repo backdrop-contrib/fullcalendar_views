@@ -370,12 +370,15 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
         }
       }
       else {
-        // Title, url and tooltip stay unchanged. Note that the title seems to
-        // get sanitized by FullCalendar. These fields are optional.
+        // Title, url and tooltip are optional.
         if (!empty($this->rendered_fields[$row_index][$view_field])) {
           $rendered_field = $this->rendered_fields[$row_index][$view_field];
           if ($target == 'className') {
             $rendered_field = fullcalendar_views_sanitize_css($rendered_field);
+          }
+          // Prevent double encoding of special characters like "&".
+          elseif ($target == 'title') {
+            $rendered_field = strip_tags(decode_entities($rendered_field));
           }
           $rendered_fields[$target] = $rendered_field;
         }
