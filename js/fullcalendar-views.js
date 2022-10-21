@@ -79,7 +79,10 @@
           options.initialView = mysettings.types;
         }
 
-        // @todo let extend?
+        // Let modules or themes override options by adding a js setting
+        // 'fullcalendar_views_custom' to the page.
+        $.extend(options, settings.fullcalendar_views_custom);
+
         var calendar = new FullCalendar.Calendar(calendarElem, options);
         calendar.render();
 
