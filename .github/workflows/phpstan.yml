@@ -15,12 +15,12 @@ jobs:
           tools: phpstan
 
       - name: Checkout Backdrop core
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: backdrop/backdrop
 
       - name: Checkout module
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           path: modules/${{ env.REPO_NAME }}
 
