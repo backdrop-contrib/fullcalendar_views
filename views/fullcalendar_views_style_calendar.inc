@@ -60,9 +60,6 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
     parent::options_form($form, $form_state);
 
     $date_fields = $this->getDateFieldCandidates();
-    if (empty($date_fields)) {
-      backdrop_set_message(t('Fullcalendar views need a supported date field.'), 'warning', FALSE);
-    }
     $mappings = $this->options['field_mapping'];
     $setup = $this->options['calendar_setup'];
     $all_fields = array('' => t('<none>')) + $this->display->handler->get_field_labels();
@@ -74,9 +71,8 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
     $form['field_mapping']['date'] = array(
       '#type' => 'select',
       '#title' => t('Date field'),
-      '#options' => $date_fields,
+      '#options' => array('' => t('None (empty calendar)')) + $date_fields,
       '#default_value' => $mappings['date'],
-      '#required' => TRUE,
       '#description' => t('Supported types are core Date fields, Resource timeslots, Repeating dates, and all timestamps natively handled by views.'),
     );
     $form['field_mapping']['title'] = array(
@@ -259,26 +255,18 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
       return NULL;
     }
 
-    // A calendar always needs dates.
-    $date_fields = $this->getDateFieldCandidates();
-    if (empty($date_fields)) {
-      // Show the message only in live preview, not on possibly public pages.
-      if (!empty($this->view->live_preview)) {
-        backdrop_set_message(t('No date field available.'), 'warning');
-      }
-      return NULL;
-    }
-
     global $language;
     $view = $this->view;
     $field = $view->field;
     $options = $this->options;
 
     $events = array();
-    // Render the fields with all token replacements and overrides.
-    $this->render_fields($view->result);
-    foreach ($view->result as $index => $row) {
-      $events[$index] = $this->renderRow($view, $index);
+    if (!empty($options['field_mapping']['date'])) {
+      // Render the fields with all token replacements and overrides.
+      $this->render_fields($view->result);
+      foreach ($view->result as $index => $row) {
+        $events[$index] = $this->renderRow($view, $index);
+      }
     }
 
     $settings = $this->buildCalendarSettings();
