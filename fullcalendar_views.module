@@ -47,6 +47,23 @@ function fullcalendar_views_preprocess_views_ui_view_preview_section(&$variables
 }
 
 /**
+ * Implements hook_preprocess_HOOK().
+ */
+function fullcalendar_views_preprocess_page(&$variables) {
+  // Inject js and css for calendar previews on every potential candidate, even
+  // if not needed.
+  // @todo is there a smarter way (without breaking ajax)?
+  $pattern = '#admin/structure/views/view/.+/configure/page#';
+  $path = current_path();
+  if (preg_match($pattern, $path) === 1) {
+    $module_path = backdrop_get_path('module', 'fullcalendar_views');
+    backdrop_add_library('fullcalendar_lib', 'fullcalendar');
+    backdrop_add_js($module_path . '/js/fullcalendar-views.js');
+    backdrop_add_css($module_path . '/css/fullcalendar-views.css');
+  }
+}
+
+/**
  * Helper function to return supported field API types.
  *
  * @see FullcalendarViewsStyleCalendar::getDateFieldCandidates()
