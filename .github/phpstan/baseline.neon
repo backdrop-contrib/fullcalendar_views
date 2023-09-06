@@ -6,6 +6,16 @@ parameters:
 			path: ../../fullcalendar_views.module
 
 		-
+			message: "#^Function fullcalendar_views_preprocess_page\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: ../../fullcalendar_views.module
+
+		-
+			message: "#^Function fullcalendar_views_preprocess_page\\(\\) has parameter \\$variables with no type specified\\.$#"
+			count: 1
+			path: ../../fullcalendar_views.module
+
+		-
 			message: "#^Function fullcalendar_views_preprocess_views_ui_view_preview_section\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: ../../fullcalendar_views.module
