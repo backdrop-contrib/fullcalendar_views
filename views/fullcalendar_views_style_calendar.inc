@@ -60,9 +60,6 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
     parent::options_form($form, $form_state);
 
     $date_fields = $this->getDateFieldCandidates();
-    if (empty($date_fields)) {
-      backdrop_set_message(t('Fullcalendar views need a supported date field.'), 'warning', FALSE);
-    }
     $mappings = $this->options['field_mapping'];
     $setup = $this->options['calendar_setup'];
     $all_fields = array('' => t('<none>')) + $this->display->handler->get_field_labels();
@@ -76,7 +73,6 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
       '#title' => t('Date field'),
       '#options' => $date_fields,
       '#default_value' => $mappings['date'],
-      '#required' => TRUE,
       '#description' => t('Supported types are core Date fields, Resource timeslots, Repeating dates, and all timestamps natively handled by views.'),
     );
     $form['field_mapping']['title'] = array(
@@ -259,26 +255,18 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
       return NULL;
     }
 
-    // A calendar always needs dates.
-    $date_fields = $this->getDateFieldCandidates();
-    if (empty($date_fields)) {
-      // Show the message only in live preview, not on possibly public pages.
-      if (!empty($this->view->live_preview)) {
-        backdrop_set_message(t('No date field available.'), 'warning');
-      }
-      return NULL;
-    }
-
     global $language;
     $view = $this->view;
     $field = $view->field;
     $options = $this->options;
 
     $events = array();
-    // Render the fields with all token replacements and overrides.
-    $this->render_fields($view->result);
-    foreach ($view->result as $index => $row) {
-      $events[$index] = $this->renderRow($view, $index);
+    if (!empty($options['field_mapping']['date'])) {
+      // Render the fields with all token replacements and overrides.
+      $this->render_fields($view->result);
+      foreach ($view->result as $index => $row) {
+        $events[$index] = $this->renderRow($view, $index);
+      }
     }
 
     $settings = $this->buildCalendarSettings();
@@ -287,10 +275,15 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
       backdrop_add_library('system', 'ui.tooltip');
       $settings['hasTooltips'] = TRUE;
     }
-    $module_path = backdrop_get_path('module', 'fullcalendar_views');
-    backdrop_add_library('fullcalendar_lib', 'fullcalendar');
-    backdrop_add_js($module_path . '/js/fullcalendar-views.js');
-    backdrop_add_css($module_path . '/css/fullcalendar-views.css');
+
+    // The ajax preview breaks when adding those in live preview.
+    // @see views_fullcalendar_preprocess_page
+    if (empty($this->view->live_preview)) {
+      $module_path = backdrop_get_path('module', 'fullcalendar_views');
+      backdrop_add_library('fullcalendar_lib', 'fullcalendar');
+      backdrop_add_js($module_path . '/js/fullcalendar-views.js');
+      backdrop_add_css($module_path . '/css/fullcalendar-views.css');
+    }
 
     $id = $view->name . ucfirst($view->current_display);
     $setup = array(
@@ -396,7 +389,7 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
   protected function getDateFieldCandidates() {
     $all_fields = $this->display->handler->get_field_labels();
     $handlers = $this->display->handler->get_handlers('field');
-    $field_candidates = array();
+    $field_candidates = array('' => t('None (empty calendar)'));
 
     foreach ($all_fields as $alias => $label) {
       $handler_class = get_class($handlers[$alias]);
