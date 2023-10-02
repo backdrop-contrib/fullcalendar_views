@@ -144,6 +144,10 @@ class FullcalendarViewsStyleJson extends views_plugin_style {
           if ($target == 'className') {
             $rendered_field = fullcalendar_views_sanitize_css($rendered_field);
           }
+          // Prevent double encoding of special characters like "&".
+          elseif ($target == 'title') {
+            $rendered_field = strip_tags(decode_entities($rendered_field));
+          }
           $rendered_fields[$target] = $rendered_field;
         }
       }
