@@ -49,7 +49,7 @@ function fullcalendar_views_preprocess_views_ui_view_preview_section(&$variables
 /**
  * Implements hook_form_FORM_ID_alter().
  */
-function fullcalendar_views_form_views_ui_preview_form_alter($form, &$form_state, $form_id) {
+function fullcalendar_views_form_views_ui_preview_form_alter(array $form, array &$form_state, $form_id) {
   if (is_object($form_state['view'])) {
     $has_calendar = FALSE;
     // We can not rely on view::handler as it may not be set, yet.
