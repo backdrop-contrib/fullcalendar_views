@@ -1,17 +1,32 @@
 parameters:
 	ignoreErrors:
 		-
+			message: "#^Access to an undefined property object\\:\\:\\$display\\.$#"
+			count: 1
+			path: ../../fullcalendar_views.module
+
+		-
 			message: "#^Function fullcalendar_views_autoload_info\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: ../../fullcalendar_views.module
 
 		-
-			message: "#^Function fullcalendar_views_preprocess_page\\(\\) has no return type specified\\.$#"
+			message: "#^Function fullcalendar_views_form_views_ui_preview_form_alter\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: ../../fullcalendar_views.module
 
 		-
-			message: "#^Function fullcalendar_views_preprocess_page\\(\\) has parameter \\$variables with no type specified\\.$#"
+			message: "#^Function fullcalendar_views_form_views_ui_preview_form_alter\\(\\) has parameter \\$form with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../../fullcalendar_views.module
+
+		-
+			message: "#^Function fullcalendar_views_form_views_ui_preview_form_alter\\(\\) has parameter \\$form_id with no type specified\\.$#"
+			count: 1
+			path: ../../fullcalendar_views.module
+
+		-
+			message: "#^Function fullcalendar_views_form_views_ui_preview_form_alter\\(\\) has parameter \\$form_state with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: ../../fullcalendar_views.module
 

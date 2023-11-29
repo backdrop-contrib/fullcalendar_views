@@ -6,10 +6,15 @@
 
   Backdrop.behaviors.fullcalendarViews = {
     attach: function (context, settings) {
+      if (!settings.fullcalendarViews) {
+        return;
+      }
       $(settings.fullcalendarViews).each(function () {
-
         var id = Object.keys(this)[0];
         var calendarElem = document.getElementById(id);
+        if (!calendarElem) {
+          return;
+        }
         var myevents = this[id].events;
         var mysettings = this[id].settings;
 
