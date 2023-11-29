@@ -1,7 +1,7 @@
 # Fullcalendar Views NG
 
 Views style plugin to render all sorts of date fields as events with
- [FullCalendar 5.x](https://fullcalendar.io/).
+ [FullCalendar 6.x](https://fullcalendar.io/).
 
 ![Calendar screenshot](https://raw.githubusercontent.com/backdrop-contrib/fullcalendar_views/1.x-1.x/screenshots/calendar.png)
 
@@ -34,7 +34,8 @@ Some basic instructions are available in the
 
 FullCalendar can parse (external) json feeds for additional events. See the official
  documentation about [EventSources](https://fullcalendar.io/docs/event-source-object)
- for more information.
+ for more information. One option to create such a resource is the
+ Fullcalendar Feed (Fullcalendar JSON) views format provided by this module.
 
 ## Dependencies
 
