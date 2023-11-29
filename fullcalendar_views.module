@@ -47,19 +47,30 @@ function fullcalendar_views_preprocess_views_ui_view_preview_section(&$variables
 }
 
 /**
- * Implements hook_preprocess_HOOK().
+ * Implements hook_form_FORM_ID_alter().
  */
-function fullcalendar_views_preprocess_page(&$variables) {
-  // Inject js and css for calendar previews on every potential candidate, even
-  // if not needed.
-  // @todo is there a smarter way (without breaking ajax)?
-  $pattern = '#admin/structure/views/view/.+/configure/page#';
-  $path = current_path();
-  if (preg_match($pattern, $path) === 1) {
-    $module_path = backdrop_get_path('module', 'fullcalendar_views');
-    backdrop_add_library('fullcalendar_lib', 'fullcalendar');
-    backdrop_add_js($module_path . '/js/fullcalendar-views.js');
-    backdrop_add_css($module_path . '/css/fullcalendar-views.css');
+function fullcalendar_views_form_views_ui_preview_form_alter($form, &$form_state, $form_id) {
+  if (is_object($form_state['view'])) {
+    $has_calendar = FALSE;
+    // We can not rely on view::handler as it may not be set, yet.
+    foreach ($form_state['view']->display as $name => $view_display) {
+      // The display_options property still can be anything.
+      $display_options = $view_display->display_options;
+      if (isset($display_options['style_plugin']) && $display_options['style_plugin'] == 'fullcalendar_view') {
+        $has_calendar = TRUE;
+        break;
+      }
+    }
+    // If any diplay of the current view has the fullcalendar plugin selected,
+    // attach assets to render a calendar.
+    // This does require to reload the page eventually, but otherwise we'd have
+    // to always attach the library and js, even if not needed at all.
+    if ($has_calendar) {
+      $module_path = backdrop_get_path('module', 'fullcalendar_views');
+      backdrop_add_library('fullcalendar_lib', 'fullcalendar');
+      backdrop_add_js($module_path . '/js/fullcalendar-views.js');
+      backdrop_add_css($module_path . '/css/fullcalendar-views.css');
+    }
   }
 }
 
