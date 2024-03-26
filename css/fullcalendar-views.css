@@ -19,8 +19,23 @@
 .fullcalendar-view th {
   overflow: visible;
 }
-@media (max-width: 660px) {
+@media (max-width: 48em) {
   .fc .fc-toolbar-title {
-    font-size: 1.3em;
+    font-size: 1.4em;
+    line-height: 1.2;
+  }
+}
+.fullcalendar-view.fc .fc-toolbar {
+  gap: 1rem;
+}
+@media (max-width: 32em) {
+  .fullcalendar-view.fc .fc-toolbar {
+    display: block;
+  }
+  .fullcalendar-view.fc .fc-toolbar-chunk {
+    margin-bottom: .5rem;
+  }
+  .fullcalendar-view.fc .fc-toolbar-chunk:last-child {
+    margin-bottom: 0;
   }
 }
