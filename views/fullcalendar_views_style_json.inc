@@ -135,7 +135,12 @@ class FullcalendarViewsStyleJson extends views_plugin_style {
         }
         // Anything directly supported by views_handler_field_date.
         else {
-          $rendered_fields['start'] = $this->get_field_value($row_index, $view_field) * 1000;
+          $value = $this->get_field_value($row_index, $view_field);
+          if (!is_numeric($value)) {
+            // If it's not a timestamp, it might be a date string.
+            $value = strtotime($value);
+          }
+          $rendered_fields['start'] = $value * 1000;
         }
       }
       else {
