@@ -89,6 +89,13 @@
         $.extend(options, settings.fullcalendar_views_custom);
 
         var calendar = new FullCalendar.Calendar(calendarElem, options);
+
+        // Expose calendar to global space and dispatch a custom event, to
+        // inform modules or themes. An additional way to extend calendars.
+        Backdrop.fullcalendarInstances = Backdrop.fullcalendarInstances || {};
+        Backdrop.fullcalendarInstances[id] = calendar;
+        $(document).trigger('fullCalendar:created', {calendarId: id});
+
         calendar.render();
 
         // Additional event sources as json feeds.
