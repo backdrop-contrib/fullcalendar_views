@@ -28,11 +28,11 @@ Important note: if it's a multi-value field, make sure that the "Display all val
 row" setting under "Multiple field settings" of that view field is **not checked**.
 
 Some basic instructions are available in the
- [Wiki](https://github.com/backdrop-contrib/fullcalendar_views/wiki/Create-a-calendar)
+ [Wiki](https://github.com/backdrop-contrib/fullcalendar_views/wiki)
 
 ### Additional event sources
 
-FullCalendar can parse (external) json feeds for additional events. See the official
+FullCalendar can parse (external) JSON feeds for additional events. See the official
  documentation about [EventSources](https://fullcalendar.io/docs/event-source-object)
  for more information. One option to create such a resource is the
  Fullcalendar Feed (Fullcalendar JSON) views format provided by this module.
