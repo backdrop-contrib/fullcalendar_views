@@ -83,6 +83,9 @@
           };
           options.initialView = mysettings.types;
         }
+        if (mysettings.todayButton) {
+          options.headerToolbar.right = 'today prev,next';
+        }
 
         // Let modules or themes override options by adding a js setting
         // 'fullcalendar_views_custom' to the page.
