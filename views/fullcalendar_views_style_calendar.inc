@@ -37,6 +37,7 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
           'timeGridDay' => 0,
           'listMonth' => 0,
         ),
+        'todayButton' => FALSE,
         'weekNumbers' => FALSE,
         'browserLocale' => FALSE,
         'allDaySlot' => TRUE,
@@ -121,11 +122,16 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
       '#default_value' => $setup['types'],
       '#required' => TRUE,
     );
+    $form['calendar_setup']['todayButton'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Display today button'),
+      '#default_value' => $setup['todayButton'],
+      '#prefix' => '<p><strong>' . t('Display options') . '</strong></p>',
+    );
     $form['calendar_setup']['weekNumbers'] = array(
       '#type' => 'checkbox',
       '#title' => t('Display week numbers'),
       '#default_value' => $setup['weekNumbers'],
-      '#prefix' => '<p><strong>' . t('Display options') . '</strong></p>',
     );
     $form['calendar_setup']['browserLocale'] = array(
       '#type' => 'checkbox',
@@ -426,6 +432,7 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
     $settings = array(
       'locale' => self::getLangcode(),
       'types' => implode(',', array_filter($options['types'])),
+      'todayButton' => !empty($options['todayButton']),
       'weekNumbers' => (bool) $options['weekNumbers'],
       'browserLocale' => (bool) $options['browserLocale'],
       'allDaySlot' => (bool) $options['allDaySlot'],
