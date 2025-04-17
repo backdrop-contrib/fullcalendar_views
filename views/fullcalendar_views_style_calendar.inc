@@ -290,6 +290,8 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
       $module_path = backdrop_get_path('module', 'fullcalendar_views');
       backdrop_add_library('fullcalendar_lib', 'fullcalendar');
       backdrop_add_js($module_path . '/js/fullcalendar-views.js');
+      // @see https://github.com/backdrop/backdrop-issues/issues/6884
+      // @phpstan-ignore-next-line
       backdrop_add_css($module_path . '/css/fullcalendar-views.css');
     }
 
@@ -310,6 +312,8 @@ class FullcalendarViewsStyleCalendar extends views_plugin_style {
     $style_var .= '--fc-event-border-color:' . $options['calendar_setup']['event_bg_color'] . ';';
     $style_var .= '--fc-event-text-color:' . $options['calendar_setup']['event_text_color'] . ';';
     $style_var .= '}';
+    // @see https://github.com/backdrop/backdrop-issues/issues/6884
+    // @phpstan-ignore-next-line
     backdrop_add_css($style_var, array(
       'type' => 'inline',
     ));
