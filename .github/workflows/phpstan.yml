@@ -3,7 +3,7 @@ on: [pull_request]
 jobs:
   phpstan:
     name: PHPStan
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Setup env
         run: echo "REPO_NAME=${PWD##*/}" >> $GITHUB_ENV
@@ -11,16 +11,16 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.1'
+          php-version: '8.3'
           tools: phpstan
 
       - name: Checkout Backdrop core
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: backdrop/backdrop
 
       - name: Checkout module
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           path: modules/${{ env.REPO_NAME }}
 

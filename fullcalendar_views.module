@@ -69,6 +69,8 @@ function fullcalendar_views_form_views_ui_preview_form_alter(array $form, array 
       $module_path = backdrop_get_path('module', 'fullcalendar_views');
       backdrop_add_library('fullcalendar_lib', 'fullcalendar');
       backdrop_add_js($module_path . '/js/fullcalendar-views.js');
+      // @see https://github.com/backdrop/backdrop-issues/issues/6884
+      // @phpstan-ignore-next-line
       backdrop_add_css($module_path . '/css/fullcalendar-views.css');
     }
   }
